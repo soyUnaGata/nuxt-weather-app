@@ -8,6 +8,7 @@
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
 import axios from 'axios';
+
 const route = useRoute();
 
 const city = ref(route.query.city);
