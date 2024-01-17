@@ -1,6 +1,11 @@
 <template>
     <div>
-        <h3 class="bg-green mt-2">I'm about weather</h3>
-        <NuxtLink :to="'/'">Go</NuxtLink>
+        <span>City: {{ route.query.city }}</span>
     </div>
 </template>
+
+<script setup>
+import { API_KEY, BASE_URL } from "../composables/index.js";
+const route = useRoute()
+
+</script>
