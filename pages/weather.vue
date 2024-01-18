@@ -7,8 +7,8 @@
             {{ isMetric ? 'Switch to Kelvin' : 'Switch to Celsius' }}
         </button>
         <p v-if="isMetric">
-            {{ kelvinToCelsius }} &deg;C </p>
-        <p v-else> {{ temperature }} &deg;K</p>
+            {{ fahrenheitToCelsius }} &deg;C </p>
+        <p v-else> {{ temperature }} &deg;F</p>
         {{ temperature }}
         <NuxtLink to="/">Back</NuxtLink>
     </div>
@@ -29,7 +29,7 @@ const temperature = ref({});
 
 
 async function getWeather() {
-    await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}`)
+    await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}&units=imperial`)
         .then(response => response.data)
         .then((info) => {
             details.value = info;
@@ -42,8 +42,8 @@ function toggleTemperature() {
     isMetric.value = !isMetric.value;
 }
 
-const kelvinToCelsius = computed(() => {
-    return temperature.value ? Math.round(parseInt(temperature.value) - 273.15) : null;
+const fahrenheitToCelsius = computed(() => {
+    return temperature.value ? Math.round(parseInt(temperature.value - 32) * (5 / 9)) : null;
 });
 
 onMounted(getWeather)
