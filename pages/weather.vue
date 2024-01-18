@@ -1,25 +1,52 @@
 <template>
     <div>
-        <p>{{ city }}</p>
+        <div>
+            {{ details.name }}</div>
+        <img :src="`/img/state-weather/${weather.description}.png`">
+        <button @click="toggleTemperature">
+            {{ isMetric ? 'Switch to Kelvin' : 'Switch to Celsius' }}
+        </button>
+        <p v-if="isMetric">
+            {{ kelvinToCelsius }} &deg;C </p>
+        <p v-else> {{ temperature }} &deg;K</p>
+        {{ temperature }}
         <NuxtLink to="/">Back</NuxtLink>
     </div>
 </template>
 
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 const route = useRoute();
-
 const city = ref(route.query.city);
-const infoWeather = ref(null);
+
+const details = ref('')
+const weather = ref({});
+const isMetric = ref(true);
+const temperature = ref({});
+
 
 async function getWeather() {
     await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}`)
         .then(response => response.data)
-        .then(data => infoWeather.value = data)
+        .then((info) => {
+            details.value = info;
+            temperature.value = info.main ? Math.round(info.main.temp) : {};
+            weather.value = info.weather.length ? info.weather[0] : {};
+        })
 }
 
+function toggleTemperature() {
+    isMetric.value = !isMetric.value;
+}
+
+const kelvinToCelsius = computed(() => {
+    return temperature.value ? Math.round(parseInt(temperature.value) - 273.15) : null;
+});
+
 onMounted(getWeather)
+
 
 </script>
