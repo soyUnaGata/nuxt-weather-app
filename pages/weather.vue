@@ -1,20 +1,11 @@
 <template>
     <div class="wrapper">
-        <main class="details__weather w-7/12 flex flex-col">
+        <main class="details__weather flex flex-col">
             <div class="weather__conditions flex justify-between items-center">
                 <div class="weather__conditions-img">
                     <img :src="`/img/state-weather/${weather.description}.png`">
                     <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt="">
                 </div>
-                <button class="border-l-pink-950 border" @click="toggleTemperature">
-                    {{ isMetric ? 'F' : 'C' }}
-                </button>
-                <!-- <div class="toogle__temperature">
-                    <input type="checkbox" id="toggle-button" class="toggle-button appearance-none relative inline-block w-28 h-12 m-0 align-top 
-                    bg-slate-50 opacity-25 border-cyan-200 border rounded-3xl outline-none cursor-pointer"
-                        @click="toggleTemperature">
-                    <label for="toggle-button" class="text">{{ isMetric ? 'F' : 'C' }}</label>
-                </div> -->
 
                 <div class="toogle__temperature temp" id="button-toogler">
                     <input type="checkbox" class="toogle__checkbox" @click="toggleTemperature" />
