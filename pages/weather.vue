@@ -1,10 +1,11 @@
 <template>
     <div class="wrapper">
-        <main class="details__weather flex flex-col">
+        <main class="details__weather mt-16 flex flex-col">
             <div class="weather__conditions flex justify-between items-center">
                 <div class="weather__conditions-img">
-                    <img :src="`/img/state-weather/${weather.description}.png`">
-                    <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt="">
+                    <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
+                        :src="`/img/state-weather/${weather.description}.png`" :alt="`${weather.description}`">
+                    <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
                 </div>
 
                 <div class="toogle__temperature temp" id="button-toogler">
@@ -18,9 +19,13 @@
 
             </div>
 
-            <div class="temperature__details">
-                <p v-if="isMetric" class="temperature__details-cel">{{ fahrenheitToCelsius }} &deg;C </p>
-                <p v-else class="temperature__details-fahr"> {{ temperature }} &deg;F</p>
+            <div class="temperature__details mt-6">
+                <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
+                    <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
+                </p>
+                <p v-else class="temperature__details-fahr text-9xl flex"> {{ temperature }}
+                    <span class="temperature__details-fahr__icon text-4xl">&deg;F</span>
+                </p>
             </div>
         </main>
 
@@ -119,7 +124,7 @@ onMounted(getWeather)
 
 .layer {
     width: 100%;
-    background-color: #ebf7fc;
+    background-color: var(--primary);
     transition: 0.3s ease all;
     z-index: 1;
 }
@@ -147,8 +152,7 @@ onMounted(getWeather)
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* background-color: #03a9f4; */
-    background-color: rgba(140, 107, 174, 0.9668242296918768);
+    background-color: var(--bg-toogle-violet);
     transform: translateX(0);
     transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
 }
@@ -156,34 +160,39 @@ onMounted(getWeather)
 #button-toogler .knobs:after {
     content: "F\00b0";
     right: 10px;
-    color: #4e4e4e;
+    color: var(--for-text);
     font-size: 14px;
 }
 
 #button-toogler .knobs span {
     display: inline-block;
     left: 4px;
-    color: #fff;
+    color: var(--secondary);
     z-index: 1;
     font-size: 18px;
 }
 
 #button-toogler .toogle__checkbox:checked+.knobs span {
-    color: #4e4e4e;
+    color: var(--for-text);
     font-size: 14px;
 }
 
 #button-toogler .toogle__checkbox:checked+.knobs:before {
     transform: translateX(calc(100% + 9px));
-    background-color: rgba(255, 150, 150, 1);
+    background-color: var(--bg-toogle-orange);
 }
 
 #button-toogler .toogle__checkbox:checked+.knobs:after {
-    color: #fff;
+    color: var(--secondary);
     font-size: 18px;
 }
 
 #button-toogler .toogle__checkbox:checked~.layer {
-    background-color: #fcebeb;
+    background-color: var(--bg-toogle-checked);
+}
+
+.weather__conditions-img__sized {
+    width: 140px;
+    height: 150px;
 }
 </style>
