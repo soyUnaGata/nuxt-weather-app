@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --primary: #ebf7fc;
+    --bg-toogle-violet: rgba(140, 107, 174, 0.9668242296918768);
+    --bg-toogle-orange: rgba(255, 150, 150, 1);
+    --bg-toogle-checked: #fcebeb;
+    --secondary: #fff;
+    --for-text:#4e4e4e;
+}
+
 *{
     margin: 0;
     padding: 0;
