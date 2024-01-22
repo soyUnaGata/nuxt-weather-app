@@ -47,10 +47,10 @@
 
             <div class="weather__details-date mt-4">
                 <div class="weather__details-date__numeric text-xl">
-                    {{ day }}th {{ month }} '{{ year }}
+                    {{ formatDay(timezone) }}th {{ formatMonth(timezone) }} '{{ formatYear(timezone) }}
                 </div>
                 <div class="weather__details-date__weekday text-base flex items-center gap-1.5 mt-2">
-                    {{ weekday }}
+                    {{ formatWeekday(timezone) }}
                     <span class="pipeline border"></span>
                     {{ formatTime(timezone) }}
                 </div>
@@ -66,7 +66,7 @@
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
 import { capitalizeFirstLetter } from "../utils/index.js";
-import { formatTime } from "../utils/dayjsUtil.js";
+import { formatTime, formatDay, formatMonth, formatYear, formatWeekday } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
@@ -78,10 +78,6 @@ const details = ref('')
 const weather = ref({});
 const isMetric = ref(true);
 const temperature = ref({});
-const weekday = new Date().toLocaleString('en-EN', { weekday: 'long' });
-const year = new Date().toLocaleString('en-EN', { year: 'numeric' }).slice(-2);;
-const month = new Date().toLocaleString('en-EN', { month: 'long' });
-const day = new Date().toLocaleString('en-EN', { day: 'numeric' });
 const timezone = ref('');
 
 async function getWeather() {
