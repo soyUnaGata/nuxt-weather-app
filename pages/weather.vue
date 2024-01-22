@@ -19,7 +19,7 @@
 
             </div>
 
-            <div class="temperature__details mt-6">
+            <div class="temperature__details mt-6 font-thin">
                 <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
                     <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
                 </p>
@@ -29,16 +29,42 @@
             </div>
         </main>
 
-        <section class=""></section>
+        <section class="weather__details flex flex-col mt-4">
+            <div class="weather__details-about flex items-center gap-1.5">
+                <div class="weather__details-city flex items-center gap-1.5">
+                    <svg class="weather__details-city__icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                        viewBox="0 0 384 512">
+                        <path
+                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                    </svg>
+                    <h3 class="weather__details-city__name text-3xl"> {{ details.name }}, {{ details.sys?.country }}</h3>
+                </div>
+
+                <span class="pipeline border"></span>
+
+                <h3 class="weather__details-description text-3xl">{{ capitalizeFirstLetter(weather.description) }}</h3>
+            </div>
+
+            <div class="weather__details-date">
+                <div class="weather__details-date__numeric text-xl">
+                    {{ day }}th {{ month }} '{{ year }}
+                </div>
+                <div class="weather__details-date__weekday text-base flex items-center gap-1.5">
+                    {{ weekday }}
+                    <span class="pipeline border"></span>
+                </div>
+            </div>
+        </section>
 
         <div>
-            {{ details.name }}</div>
+        </div>
         <NuxtLink to="/">Back</NuxtLink>
     </div>
 </template>
 
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
+import { capitalizeFirstLetter } from "../utils/index.js";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
@@ -49,7 +75,10 @@ const details = ref('')
 const weather = ref({});
 const isMetric = ref(true);
 const temperature = ref({});
-
+const weekday = new Date().toLocaleString('en-EN', { weekday: 'long' });
+const year = new Date().toLocaleString('en-EN', { year: 'numeric' }).slice(-2);;
+const month = new Date().toLocaleString('en-EN', { month: 'long' });
+const day = new Date().toLocaleString('en-EN', { day: 'numeric' });
 
 async function getWeather() {
     await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}&units=imperial`)
@@ -194,5 +223,23 @@ onMounted(getWeather)
 .weather__conditions-img__sized {
     width: 140px;
     height: 150px;
+}
+
+.temperature__details {
+    color: var(--primary);
+}
+
+.weather__details-city__icon {
+    fill: var(--primary);
+}
+
+.weather__details-city__name,
+.weather__details-description {
+    color: var(--primary);
+}
+
+.pipeline {
+    width: 24px;
+    transform: rotate(90deg);
 }
 </style>
