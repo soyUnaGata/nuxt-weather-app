@@ -45,13 +45,14 @@
                 <h3 class="weather__details-description text-3xl">{{ capitalizeFirstLetter(weather.description) }}</h3>
             </div>
 
-            <div class="weather__details-date">
+            <div class="weather__details-date mt-4">
                 <div class="weather__details-date__numeric text-xl">
                     {{ day }}th {{ month }} '{{ year }}
                 </div>
-                <div class="weather__details-date__weekday text-base flex items-center gap-1.5">
+                <div class="weather__details-date__weekday text-base flex items-center gap-1.5 mt-2">
                     {{ weekday }}
                     <span class="pipeline border"></span>
+                    {{ formatTime(timezone) }}
                 </div>
             </div>
         </section>
@@ -65,8 +66,10 @@
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
 import { capitalizeFirstLetter } from "../utils/index.js";
+import { formatTime } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+
 
 const route = useRoute();
 const city = ref(route.query.city);
@@ -79,6 +82,7 @@ const weekday = new Date().toLocaleString('en-EN', { weekday: 'long' });
 const year = new Date().toLocaleString('en-EN', { year: 'numeric' }).slice(-2);;
 const month = new Date().toLocaleString('en-EN', { month: 'long' });
 const day = new Date().toLocaleString('en-EN', { day: 'numeric' });
+const timezone = ref('');
 
 async function getWeather() {
     await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}&units=imperial`)
@@ -87,6 +91,7 @@ async function getWeather() {
             details.value = info;
             temperature.value = info.main ? Math.round(info.main.temp) : {};
             weather.value = info.weather.length ? info.weather[0] : {};
+            timezone.value = info.timezone;
         })
 }
 
@@ -99,8 +104,6 @@ const fahrenheitToCelsius = computed(() => {
 });
 
 onMounted(getWeather)
-
-
 </script>
 
 <style scoped>
