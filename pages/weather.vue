@@ -239,7 +239,9 @@ onMounted(getWeather)
 }
 
 .weather__details-city__name,
-.weather__details-description {
+.weather__details-description,
+.weather__details-date__numeric,
+.weather__details-date__weekday {
     color: var(--primary);
 }
 
