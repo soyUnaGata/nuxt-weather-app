@@ -3,18 +3,11 @@ import type { Sunrise } from '#build/components';
 <template>
     <div class="absolute">
         <div class="sun-times">
-            <div class="sun-path">
-                <div class="sun-animation" :style="{ width: animationWidth }"></div>
-                <!-- <div class="sun-animation"
-                    :style="{ left: animationWidth + '%', width: sunSize + '%', height: sunSize + '%' }"></div> -->
-            </div>
-            <div class="sun-symbol-path">
-                <!-- <span class="symbol" :style="{ left: animationWidth, top: animationWidth }">☀</span> -->
-                <span class="symbol"
-                    :style="{ left: `${dely}px`, top: `${delx}px`, transition: 'left 2s linear, top 2s linear' }">
-                    ☀</span>
-
-
+            <div style="position:relative">
+                <div class="sun-path">
+                    <div class="sun-animation" :style="{ width: animationWidth }"></div>
+                </div>
+                <span class="symbol" :style="{ position: 'absolute', left: `${x}px`, top: `${y}px` }">☀</span>
             </div>
         </div>
 
@@ -28,13 +21,33 @@ import type { Sunrise } from '#build/components';
 <script setup>
 import { ref, onMounted } from 'vue';
 
+const x = ref(0);
+const y = ref(0);
+
 const animationWidth = ref('0%');
 const symbolPosition = ref({ x: 0, y: 0 });
 
 onMounted(() => {
-    updateSunPosition();
-    test()
-    setInterval(updateSunPosition, 60000);
+    //updateSunPosition();
+    //setInterval(updateSunPosition, 60000);
+
+    let diff = 0;
+
+    setInterval(() => {
+        const now = 1706097930 + diff;
+        const sunrize = 1706097930;
+        const sunset = 1706132797;
+        const p = (now - sunrize) / (sunset - sunrize);
+        const d = 170;
+        const h = (1 - p) * d;
+        const a = Math.acos(1 - (2 * h / d));
+        const xord = d * Math.sin(a);
+        x.value = d - h - 11;
+        y.value = d / 2 - xord / 2 - 12;
+
+        diff += 60;
+    }, 75);
+
 });
 
 function calculateSunPosition(initialLeft, initialTop, arcHeight, arcWidth, time) {
@@ -46,25 +59,6 @@ function calculateSunPosition(initialLeft, initialTop, arcHeight, arcWidth, time
     const y = radius * Math.sin(currentAngle);
 
     return { x, y };
-}
-
-
-function test() {
-    const now = 1643078400;
-    const sunrize = 1706098386;
-    const sunset = 1706133754;
-    const p = (now - sunrize) / (sunset - sunrize);
-    const d = 170;
-    const h = (1 - p) * d;
-    const a = Math.acos(1 - (2 * h / d));
-    const xord = d * Math.sin(a);
-
-    const delx = d - h;
-    const dely = xord / 2;
-
-    console.log(a)
-
-    return { delx, dely };
 }
 
 function updateSunPosition() {
@@ -136,14 +130,12 @@ function updateSunPosition() {
 .sun-times {
     margin-top: 40px;
     width: 230px;
-    height: 60px;
     border-bottom: 1px solid #999;
-    overflow-y: hidden;
+    overflow: hidden;
     position: absolute;
 }
 
 .sun-path {
-    margin-left: 25px;
     width: 170px;
     /* Adjust as needed */
     height: 170px;
