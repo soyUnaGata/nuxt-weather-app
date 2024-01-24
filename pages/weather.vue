@@ -62,6 +62,10 @@
             </div>
         </section>
 
+        <section>
+            <sunrise />
+        </section>
+
         <div>
         </div>
         <NuxtLink to="/">Back</NuxtLink>
@@ -85,6 +89,7 @@ const isMetric = ref(true);
 const temperature = ref({});
 const timezone = ref('');
 
+
 async function getWeather() {
     await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}&units=imperial`)
         .then(response => response.data)
@@ -104,7 +109,13 @@ const fahrenheitToCelsius = computed(() => {
     return temperature.value ? Math.round(parseInt(temperature.value - 32) * (5 / 9)) : null;
 });
 
-onMounted(getWeather)
+
+onMounted(() => {
+    getWeather()
+});
+
+
+
 </script>
 
 <style scoped>
