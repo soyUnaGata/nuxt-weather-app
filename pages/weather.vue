@@ -63,7 +63,7 @@
         </section>
 
         <section>
-            <sunrise />
+            <sunrise :details="details" />
         </section>
 
         <div>

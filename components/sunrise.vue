@@ -4,59 +4,118 @@
         <div class="sun-times">
             <div style="position:relative; padding-top: 10px; padding-left: 25px;">
                 <div class="sun-path">
-                    <div class="sun-animation" :style="{ width: `${sunPosition.p}%` }"></div>
+                    <div class="sun-animation" :style="{ width: `${sunPosition?.progress}%` }"></div>
                 </div>
-                <span class="symbol" ref="" :style="{ left: `${sunPosition.x}px`, top: `${sunPosition.y}px` }">☀</span>
+                <span class="symbol" ref="" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">☀</span>
             </div>
         </div>
 
         <div class="legend">
-            <div class="sunrise">05:30 AM</div>
-            <div class="sunset">8:04 PM</div>
+            <div class="sunrise">{{ details.sys?.sunrise }} AM</div>
+            <div class="sunset">{{ details.sys?.sunset }} PM</div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps, watch } from 'vue';
 
-const sunPosition = reactive({
-    x: 0,
-    y: 0,
-    p: 0
+const props = defineProps({
+    details: {
+        type: Object,
+    }
 });
 
-onMounted(() => {
-    moveSun();
-    setInterval(moveSun, 60000);
+
+let intervalId = ref(null);
+let now = ref(0);
+let sunrise = ref(0);
+let sunset = ref(0);
+
+
+watch(props.details, () => {
+    if (props.details) {
+        now.value = props.details.dt;
+        sunrise.value = props.details.sys?.sunrise;
+        sunset.value = props.details.sys?.sunset;
+
+        clearInterval(intervalId.value);
+        moveSun();
+        intervalId.value = setInterval(moveSun, 60000);
+    }
 });
 
-function moveSun() {
+
+const sunPosition = computed(() => {
     const halfSunWidth = 11;
     const halfSunHeight = 12;
     const paddingTopOffset = 10;
     const paddingLeftOffset = 25;
-
-    const now = 1706179960;
-    const sunrize = 1706161386;
-    const sunset = 1706193405;
-
-    if (now >= sunset) return;
-    if (now <= sunrize) return now = sunrize;
-
-    sunPosition.p = (now - sunrize) / (sunset - sunrize);
-    sunPosition.p = sunPosition.p * 100;
-
-    const p = (now - sunrize) / (sunset - sunrize);
     const d = 170;
+
+    const result = {
+        x: - halfSunWidth + paddingLeftOffset,
+        y: d / 2 - halfSunHeight - paddingTopOffset,
+        progress: 0
+    }
+
+    const now = props.details.dt ?? 0;
+    const sunrise = props.details.sys?.sunrise ?? 0;
+    const sunset = props.details.sys?.sunset ?? 0;
+
+    if (now >= sunset) {
+        result.x = d - result.x + halfSunWidth * 2;
+        result.progress = 100;
+        return result;
+    }
+
+    if (now <= sunrise) return result;
+
+    const p = (now - sunrise) / (sunset - sunrise);
     const h = (1 - p) * d;
     const a = Math.acos(1 - (2 * h / d));
     const xord = d * Math.sin(a);
 
-    sunPosition.x = d - h - halfSunWidth + paddingLeftOffset;
-    sunPosition.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
-    console.log(p, h, a, xord, sunPosition)
-}
+    result.x = d - h - halfSunWidth + paddingLeftOffset;
+    result.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
+    result.progress = p * 100;
+
+    return result;
+});
+
+onMounted(() => {
+    if (props.details) {
+        now.value = props.details.dt;
+        sunrise.value = props.details.sys?.sunrise;
+        sunset.value = props.details.sys?.sunset;
+    }
+
+});
+
+// function moveSun() {
+//     const halfSunWidth = 11;
+//     const halfSunHeight = 12;
+//     const paddingTopOffset = 10;
+//     const paddingLeftOffset = 25;
+
+//     console.log(now.value - sunrise.value)
+//     if (now >= sunset) return;
+//     console.log(now = sunset)
+//     if (now <= sunrise) return;
+
+//     sunPosition.p = (now - sunrise) / (sunset - sunrise);
+//     sunPosition.p = sunPosition.p * 100;
+
+//     const p = (now - sunrise) / (sunset - sunrise);
+//     const d = 170;
+//     const h = (1 - p) * d;
+//     const a = Math.acos(1 - (2 * h / d));
+//     const xord = d * Math.sin(a);
+
+//     sunPosition.x = d - h - halfSunWidth + paddingLeftOffset;
+//     sunPosition.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
+
+// }
 
 
 </script>
