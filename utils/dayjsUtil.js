@@ -5,7 +5,7 @@ dayjs.extend(utc);
 
 export const formatTime = (timezone) => {
   const utcNow = dayjs().utc();
-  return utcNow.add(timezone, "s").format("HH:mm a");
+  return utcNow.add(timezone, "s").format("h:mm a");
 };
 
 export const formatDay = (timezone) => {
