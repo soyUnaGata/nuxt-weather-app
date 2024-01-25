@@ -1,4 +1,3 @@
-
 <template>
     <div class="absolute">
         <div class="sun-times">
@@ -11,14 +10,15 @@
         </div>
 
         <div class="legend">
-            <div class="sunrise">{{ details.sys?.sunrise }} AM</div>
-            <div class="sunset">{{ details.sys?.sunset }} PM</div>
+            <div class="sunrise">{{ getTime(details.sys?.sunrise) }}</div>
+            <div class="sunset">{{ getTime(details.sys?.sunset) }}</div>
         </div>
     </div>
 </template>
   
 <script setup>
 import { ref, onMounted, defineProps, watch } from 'vue';
+import { getTime } from "../utils/dayjsUtil.js";
 
 const props = defineProps({
     details: {
