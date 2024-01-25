@@ -5,13 +5,13 @@
                 <div class="sun-path">
                     <div class="sun-animation" :style="{ width: `${sunPosition?.progress}%` }"></div>
                 </div>
-                <span class="symbol" ref="" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">☀</span>
+                <span class="symbol" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">☀</span>
             </div>
         </div>
 
         <div class="legend">
-            <div class="sunrise">{{ getTime(details.sys?.sunrise) }}</div>
-            <div class="sunset">{{ getTime(details.sys?.sunset) }}</div>
+            <div class="sunrise">{{ getTime(details.sys?.sunrise, details.sys?.type == 1 ? details.timezone : 0) }}</div>
+            <div class="sunset">{{ getTime(details.sys?.sunset, details.sys?.type == 1 ? details.timezone : 0) }}</div>
         </div>
     </div>
 </template>
@@ -27,7 +27,6 @@ const props = defineProps({
 });
 
 
-let intervalId = ref(null);
 let now = ref(0);
 let sunrise = ref(0);
 let sunset = ref(0);
@@ -38,10 +37,6 @@ watch(props.details, () => {
         now.value = props.details.dt;
         sunrise.value = props.details.sys?.sunrise;
         sunset.value = props.details.sys?.sunset;
-
-        clearInterval(intervalId.value);
-        moveSun();
-        intervalId.value = setInterval(moveSun, 60000);
     }
 });
 
@@ -132,9 +127,7 @@ onMounted(() => {
 
 .sun-path {
     width: 170px;
-    /* Adjust as needed */
     height: 170px;
-    /* Adjust as needed */
     overflow: hidden;
     border: 1px dashed #999;
     border-radius: 50%;

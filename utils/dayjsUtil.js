@@ -28,6 +28,6 @@ export const formatWeekday = (timezone) => {
   return utcNow.add(timezone, "s").format("dddd");
 };
 
-export const getTime = (t) => {
-  return dayjs.unix(t).format("HH:mm a");
+export const getTime = (t, timezone = 0) => {
+  return dayjs.unix(t).add(timezone, "s").format("h:mm a");
 };

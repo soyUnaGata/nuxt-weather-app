@@ -23,7 +23,7 @@
                 <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
                     <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
                 </p>
-                <p v-else class="temperature__details-fahr text-9xl flex"> {{ temperature }}
+                <p v-else class="temperature__details-fahr text-9xl flex"> {{ Math.round(temperature) }}
                     <span class="temperature__details-fahr__icon text-4xl">&deg;F</span>
                 </p>
             </div>
@@ -95,7 +95,7 @@ async function getWeather() {
         .then(response => response.data)
         .then((info) => {
             details.value = info;
-            temperature.value = info.main ? Math.round(info.main.temp) : {};
+            temperature.value = info.main ? info.main.temp : {};
             weather.value = info.weather.length ? info.weather[0] : {};
             timezone.value = info.timezone;
         })
@@ -106,7 +106,7 @@ function toggleTemperature() {
 }
 
 const fahrenheitToCelsius = computed(() => {
-    return temperature.value ? Math.round(parseInt(temperature.value - 32) * (5 / 9)) : null;
+    return temperature.value ? Math.round(parseInt(temperature.value - 32) * (5 / 9)) : 0;
 });
 
 
