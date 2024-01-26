@@ -10,8 +10,8 @@
         </div>
 
         <div class="legend">
-            <div class="sunrise">0</div>
-            <div class="sunset">100</div>
+            <div class="humitidy__from">0</div>
+            <div class="humitidy__to">100</div>
         </div>
     </div>
 </template>
@@ -146,8 +146,8 @@
     padding: 0 20px;
 }
 
-.sunrise,
-.sunset {
+.humitidy__from,
+.humidity__to {
     font-size: 12px;
 }
 </style> 
