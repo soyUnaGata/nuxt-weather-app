@@ -1,5 +1,5 @@
 <template>
-    <div class="weather__vidget-wrapper absolute bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl">
+    <div class="weather__vidget-wrapper  bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl">
         <div class="sun-times">
             <div style="position:relative; padding-top: 10px; padding-left: 25px;">
                 <div class="sun-path">

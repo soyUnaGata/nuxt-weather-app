@@ -17,7 +17,7 @@
             </ul>
         </nav>
 
-        <main class="details__weather mt-16 flex">
+        <main class="details__weather mt-16 flex w-full">
             <div class="about__weather-section flex flex-col w-2/4">
                 <div class="weather__conditions flex justify-between items-center">
                     <div class="weather__conditions-img">
@@ -73,9 +73,10 @@
                 </section>
             </div>
 
-            <div class="details">
-                <section>
+            <div class="details flex">
+                <section class="flex gap-4">
                     <sunrise :details="details" />
+                    <humidity />
                 </section>
             </div>
         </main>
