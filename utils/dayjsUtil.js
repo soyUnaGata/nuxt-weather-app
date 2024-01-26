@@ -29,5 +29,5 @@ export const formatWeekday = (timezone) => {
 };
 
 export const getTime = (t, timezone = 0) => {
-  return dayjs.unix(t).add(timezone, "s").format("h:mm a");
+  return dayjs.utc(new Date(t)).add(timezone, "s").format("h:mm a");
 };
