@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute">
+    <div class="absolute bg-gray-200/50">
         <div class="sun-times">
             <div style="position:relative; padding-top: 10px; padding-left: 25px;">
                 <div class="sun-path">

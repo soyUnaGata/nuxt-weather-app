@@ -1,74 +1,89 @@
 <template>
     <div class="wrapper">
-        <main class="details__weather mt-16 flex flex-col">
-            <div class="weather__conditions flex justify-between items-center">
-                <div class="weather__conditions-img">
-                    <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
-                        :src="`/img/state-weather/${weather.description}.png`" :alt="`${weather.description}`">
-                    <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
-                </div>
-
-                <div class="toogle__temperature temp" id="button-toogler">
-                    <input type="checkbox" class="toogle__checkbox" @click="toggleTemperature" />
-                    <div class="knobs">
-                        <span>C&deg;</span>
+        <nav>
+            <ul class="flex justify-between">
+                <li>
+                    <NuxtLink to="/">Back</NuxtLink>
+                </li>
+                <li>
+                    <div class="toogle__temperature temp" id="button-toogler">
+                        <input type="checkbox" class="toogle__checkbox" @click="toggleTemperature" />
+                        <div class="knobs">
+                            <span>C&deg;</span>
+                        </div>
+                        <div class="layer"></div>
                     </div>
-                    <div class="layer"></div>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="details__weather mt-16 flex">
+            <div class="about__weather-section flex flex-col w-4/6">
+                <div class="weather__conditions flex justify-between items-center">
+                    <div class="weather__conditions-img">
+                        <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
+                            :src="`/img/state-weather/${weather.description}.png`" :alt="`${weather.description}`">
+                        <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
+                    </div>
+                </div>
+
+                <div class="temperature__details mt-6 font-thin">
+                    <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
+                        <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
+                    </p>
+                    <p v-else class="temperature__details-fahr text-9xl flex"> {{ Math.round(temperature) }}
+                        <span class="temperature__details-fahr__icon text-4xl">&deg;F</span>
+                    </p>
                 </div>
 
 
+                <section class="weather__details flex flex-col mt-4">
+                    <div class="weather__details-about flex items-center gap-1.5">
+                        <div class="weather__details-city flex items-center gap-1.5">
+                            <svg class="weather__details-city__icon" xmlns="http://www.w3.org/2000/svg" height="20"
+                                width="20" viewBox="0 0 384 512">
+                                <path
+                                    d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                            </svg>
+                            <h3 class="weather__details-city__name text-3xl"> {{ details.name }}, {{ details.sys?.country }}
+                            </h3>
+                        </div>
+
+                        <span class="pipeline border"></span>
+
+                        <h3 class="weather__details-description text-3xl">{{ capitalizeFirstLetter(weather.description) }}
+                        </h3>
+                    </div>
+
+                    <div class="weather__details-date mt-4">
+                        <div class="weather__details-date__numeric text-xl flex items-center gap-1.5">
+                            <svg class="weather__details-calendar" xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                viewBox="0 0 448 512">
+                                <path
+                                    d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" />
+                            </svg>
+                            <span>{{ formatDay(timezone) }}th {{ formatMonth(timezone) }} '{{ formatYear(timezone) }}</span>
+                        </div>
+                        <div class="weather__details-date__weekday text-base flex items-center gap-1.5 mt-2">
+                            {{ formatWeekday(timezone) }}
+                            <span class="pipeline border"></span>
+                            {{ formatTime(timezone) }}
+                        </div>
+                    </div>
+                </section>
             </div>
 
-            <div class="temperature__details mt-6 font-thin">
-                <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
-                    <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
-                </p>
-                <p v-else class="temperature__details-fahr text-9xl flex"> {{ Math.round(temperature) }}
-                    <span class="temperature__details-fahr__icon text-4xl">&deg;F</span>
-                </p>
+            <div class="details">
+                <section>
+                    <sunrise :details="details" />
+                </section>
             </div>
         </main>
 
-        <section class="weather__details flex flex-col mt-4">
-            <div class="weather__details-about flex items-center gap-1.5">
-                <div class="weather__details-city flex items-center gap-1.5">
-                    <svg class="weather__details-city__icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20"
-                        viewBox="0 0 384 512">
-                        <path
-                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    <h3 class="weather__details-city__name text-3xl"> {{ details.name }}, {{ details.sys?.country }}</h3>
-                </div>
 
-                <span class="pipeline border"></span>
 
-                <h3 class="weather__details-description text-3xl">{{ capitalizeFirstLetter(weather.description) }}</h3>
-            </div>
+        <section>next</section>
 
-            <div class="weather__details-date mt-4">
-                <div class="weather__details-date__numeric text-xl flex items-center gap-1.5">
-                    <svg class="weather__details-calendar" xmlns="http://www.w3.org/2000/svg" height="20" width="20"
-                        viewBox="0 0 448 512">
-                        <path
-                            d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" />
-                    </svg>
-                    <span>{{ formatDay(timezone) }}th {{ formatMonth(timezone) }} '{{ formatYear(timezone) }}</span>
-                </div>
-                <div class="weather__details-date__weekday text-base flex items-center gap-1.5 mt-2">
-                    {{ formatWeekday(timezone) }}
-                    <span class="pipeline border"></span>
-                    {{ formatTime(timezone) }}
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <sunrise :details="details" />
-        </section>
-
-        <div>
-        </div>
-        <NuxtLink to="/">Back</NuxtLink>
     </div>
 </template>
 
