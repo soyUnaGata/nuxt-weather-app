@@ -1,5 +1,6 @@
 <template>
     <div class="weather__vidget-wrapper  bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl">
+        <h5 class="sun__headline text-center pt-3 font-normal">Sunrise and sunset</h5>
         <div class="sun-times">
             <div style="position:relative; padding-top: 10px; padding-left: 25px;">
                 <div class="sun-path">
@@ -131,6 +132,10 @@ onMounted(() => {
     width: 245px;
 }
 
+.sun__headline {
+    color: var(--primary);
+}
+
 .sun-times {
     margin-top: 40px;
     width: 230px;
@@ -182,13 +187,13 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     width: 230px;
-    top: 150px;
+    top: 136px;
+    padding: 0 20px;
 }
 
 .sunrise,
 .sunset {
     font-size: 12px;
-    width: 80px;
 }
 </style> 
   

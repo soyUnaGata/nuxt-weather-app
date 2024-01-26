@@ -5,7 +5,7 @@
                 <div class="humidity-path">
                     <img src="/img/state-weather/quality.png" alt="">
                 </div>
-                <span class="symbol">&#8226</span>
+                <span class="symbol" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">&#8226</span>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
 </template>
   
 <script setup>
-// import { ref, onMounted, defineProps, watch } from 'vue';
+import { ref, onMounted, defineProps, watch } from 'vue';
 // import { getTime } from "../utils/dayjsUtil.js";
 
 // const props = defineProps({
@@ -27,7 +27,7 @@
 // });
 
 
-// let now = ref(0);
+let humidity = ref(0);
 // let sunrise = ref(0);
 // let sunset = ref(0);
 
@@ -41,42 +41,39 @@
 // });
 
 
-// const sunPosition = computed(() => {
-//     const halfSunWidth = 11;
-//     const halfSunHeight = 12;
-//     const paddingTopOffset = 10;
-//     const paddingLeftOffset = 25;
-//     const d = 170;
+const sunPosition = computed(() => {
+    const halfSunWidth = 6;
+    const halfSunHeight = 15;
+    const paddingTopOffset = 10;
+    const paddingLeftOffset = 25;
+    const d = 170;
 
-//     const result = {
-//         x: - halfSunWidth + paddingLeftOffset,
-//         y: d / 2 - halfSunHeight - paddingTopOffset,
-//         progress: 0
-//     }
+    const result = {
+        x: - halfSunWidth + paddingLeftOffset,
+        y: d / 2 - halfSunHeight - paddingTopOffset,
+    }
 
-//     const now = props.details.dt ?? 0;
-//     const sunrise = props.details.sys?.sunrise ?? 0;
-//     const sunset = props.details.sys?.sunset ?? 0;
+    const now = 2;
+    const sunrise = 0;
+    const sunset = 100;
 
-//     if (now >= sunset) {
-//         result.x = d - result.x + halfSunWidth * 2;
-//         result.progress = 100;
-//         return result;
-//     }
+    if (now >= sunset) {
+        result.x = d - result.x + halfSunWidth * 2;
+        return result;
+    }
 
-//     if (now <= sunrise) return result;
+    if (now <= sunrise) return result;
 
-//     const p = (now - sunrise) / (sunset - sunrise);
-//     const h = (1 - p) * d;
-//     const a = Math.acos(1 - (2 * h / d));
-//     const xord = d * Math.sin(a);
+    const p = (now - sunrise) / (sunset - sunrise);
+    const h = (1 - p) * d;
+    const a = Math.acos(1 - (2 * h / d));
+    const xord = d * Math.sin(a);
 
-//     result.x = d - h - halfSunWidth + paddingLeftOffset;
-//     result.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
-//     result.progress = p * 100;
+    result.x = d - h - halfSunWidth + paddingLeftOffset;
+    result.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
 
-//     return result;
-// });
+    return result;
+});
 
 // function getTime2(seconds) {
 //     return new Date(seconds * 1000).toLocaleTimeString('uk-UA', { timeZone: 'Atlantic/Reykjavik' })
@@ -88,14 +85,10 @@
 //     return getTime2(props.details.sys?.sunset + timezone.value)
 // })
 
-// onMounted(() => {
-//     if (props.details) {
-//         now.value = props.details.dt;
-//         sunrise.value = props.details.sys?.sunrise;
-//         sunset.value = props.details.sys?.sunset;
-//     }
+onMounted(() => {
 
-// }); 
+
+});
 
 
 </script> 
