@@ -18,7 +18,7 @@
         </nav>
 
         <main class="details__weather mt-16 flex">
-            <div class="about__weather-section flex flex-col w-4/6">
+            <div class="about__weather-section flex flex-col w-2/4">
                 <div class="weather__conditions flex justify-between items-center">
                     <div class="weather__conditions-img">
                         <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
