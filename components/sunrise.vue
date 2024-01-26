@@ -13,11 +13,6 @@
             <div class="sunrise">{{ getTime(details.sys?.sunrise, details.timezone) }}</div>
             <div class="sunset">{{ getTime(details.sys?.sunset, details.timezone) }}</div>
         </div>
-
-        <div class="legend">
-            <div class="sunrise">{{ sunTime }}</div>
-            <div class="sunset">{{ getTime(details.sys?.sunset, details.sys?.type == 1 ? details.timezone : 0) }}</div>
-        </div>
     </div>
 </template>
   
@@ -90,7 +85,7 @@ function getTime2(seconds) {
 const timezone = computed(() => props.details?.timezone)
 
 const sunTime = computed(() => {
-    return getTime2(props.details.sys?.sunrise + timezone.value)
+    return getTime2(props.details.sys?.sunset + timezone.value)
 })
 
 onMounted(() => {
