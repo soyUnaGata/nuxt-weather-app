@@ -6,7 +6,8 @@
                 <div class="sun-path">
                     <div class="sun-animation" :style="{ width: `${sunPosition?.progress}%` }"></div>
                 </div>
-                <span class="symbol" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">☀</span>
+                <span class="symbol cursor-pointer"
+                    :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">☀</span>
             </div>
         </div>
 
@@ -63,16 +64,6 @@ const sunPosition = computed(() => {
 
     return result;
 });
-
-function getTime2(seconds) {
-    return new Date(seconds * 1000).toLocaleTimeString('uk-UA', { timeZone: 'Atlantic/Reykjavik' })
-}
-
-const timezone = computed(() => props.details?.timezone)
-
-const sunTime = computed(() => {
-    return getTime2(props.details.sys?.sunset + timezone.value)
-})
 
 onMounted(() => {
     if (props.details) {
