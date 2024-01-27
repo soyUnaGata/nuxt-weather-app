@@ -10,8 +10,8 @@
         </div>
 
         <div class="legend">
-            <div class="humitidy__from">0</div>
-            <div class="humitidy__to">100</div>
+            <div class="humidity__from">0</div>
+            <div class="humidity__to">100</div>
         </div>
     </div>
 </template>
