@@ -18,7 +18,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted, defineProps, watch } from 'vue';
+import { onMounted, defineProps } from 'vue';
 import { getTime } from "../utils/dayjsUtil.js";
 
 const props = defineProps({
@@ -26,21 +26,6 @@ const props = defineProps({
         type: Object,
     }
 });
-
-
-let now = ref(0);
-let sunrise = ref(0);
-let sunset = ref(0);
-
-
-watch(props.details, () => {
-    if (props.details) {
-        now.value = props.details.dt;
-        sunrise.value = props.details.sys?.sunrise;
-        sunset.value = props.details.sys?.sunset;
-    }
-});
-
 
 const sunPosition = computed(() => {
     const halfSunWidth = 11;
@@ -97,32 +82,6 @@ onMounted(() => {
     }
 
 });
-
-// function moveSun() {
-//     const halfSunWidth = 11;
-//     const halfSunHeight = 12;
-//     const paddingTopOffset = 10;
-//     const paddingLeftOffset = 25;
-
-//     console.log(now.value - sunrise.value)
-//     if (now >= sunset) return;
-//     console.log(now = sunset)
-//     if (now <= sunrise) return;
-
-//     sunPosition.p = (now - sunrise) / (sunset - sunrise);
-//     sunPosition.p = sunPosition.p * 100;
-
-//     const p = (now - sunrise) / (sunset - sunrise);
-//     const d = 170;
-//     const h = (1 - p) * d;
-//     const a = Math.acos(1 - (2 * h / d));
-//     const xord = d * Math.sin(a);
-
-//     sunPosition.x = d - h - halfSunWidth + paddingLeftOffset;
-//     sunPosition.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
-
-// }
-
 
 </script>
   

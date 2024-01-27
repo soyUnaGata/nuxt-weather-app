@@ -11,34 +11,20 @@
 
         <div class="legend">
             <div class="humidity__from">0</div>
+            <div v-if="props.details.main?.humidity !== 0" class="humidity__to">{{ props.details.main?.humidity }}</div>
             <div class="humidity__to">100</div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { ref, onMounted, defineProps, watch } from 'vue';
-// import { getTime } from "../utils/dayjsUtil.js";
+import { onMounted, defineProps } from 'vue';
 
-// const props = defineProps({
-//     // details: {
-//     //     type: Object,
-//     // }
-// });
-
-
-let humidity = ref(0);
-// let sunrise = ref(0);
-// let sunset = ref(0);
-
-
-// watch(props.details, () => {
-//     if (props.details) {
-//         now.value = props.details.dt;
-//         sunrise.value = props.details.sys?.sunrise;
-//         sunset.value = props.details.sys?.sunset;
-//     }
-// });
+const props = defineProps({
+    details: {
+        type: Object,
+    }
+});
 
 
 const sunPosition = computed(() => {
@@ -53,18 +39,18 @@ const sunPosition = computed(() => {
         y: d / 2 - halfSunHeight - paddingTopOffset,
     }
 
-    const now = 2;
+    const humidity = props.details.main?.humidity ?? 0;
     const sunrise = 0;
     const sunset = 100;
 
-    if (now >= sunset) {
+    if (humidity >= sunset) {
         result.x = d - result.x + halfSunWidth * 2;
         return result;
     }
 
-    if (now <= sunrise) return result;
+    if (humidity <= sunrise) return result;
 
-    const p = (now - sunrise) / (sunset - sunrise);
+    const p = (humidity - sunrise) / (sunset - sunrise);
     const h = (1 - p) * d;
     const a = Math.acos(1 - (2 * h / d));
     const xord = d * Math.sin(a);
@@ -75,19 +61,10 @@ const sunPosition = computed(() => {
     return result;
 });
 
-// function getTime2(seconds) {
-//     return new Date(seconds * 1000).toLocaleTimeString('uk-UA', { timeZone: 'Atlantic/Reykjavik' })
-// }
-
-// const timezone = computed(() => props.details?.timezone)
-
-// const sunTime = computed(() => {
-//     return getTime2(props.details.sys?.sunset + timezone.value)
-// })
-
 onMounted(() => {
-
-
+    if (props.details) {
+        humidity.value = props.details.main?.humidity;
+    }
 });
 
 
