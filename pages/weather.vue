@@ -74,7 +74,7 @@
             </div>
 
             <div class="details flex">
-                <section class="flex gap-10">
+                <section class="grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="details" />
                     <humidity :details="details" />
                 </section>
