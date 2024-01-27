@@ -139,7 +139,7 @@ onMounted(() => {
     padding: 0 20px;
 }
 
-.humitidy__from,
+.humidity__from,
 .humidity__to {
     font-size: 12px;
 }
