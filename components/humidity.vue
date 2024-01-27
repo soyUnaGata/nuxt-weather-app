@@ -5,7 +5,8 @@
                 <div class="humidity-path">
                     <img src="/img/state-weather/quality.png" alt="">
                 </div>
-                <span class="symbol" :style="{ left: `${sunPosition?.x}px`, top: `${sunPosition?.y}px` }">&#8226</span>
+                <span class="symbol"
+                    :style="{ left: `${humidityPosition?.x}px`, top: `${humidityPosition?.y}px` }">&#8226</span>
             </div>
         </div>
 
@@ -26,37 +27,36 @@ const props = defineProps({
     }
 });
 
-
-const sunPosition = computed(() => {
-    const halfSunWidth = 6;
-    const halfSunHeight = 15;
+const humidityPosition = computed(() => {
+    const halfHumidityWidth = 6;
+    const halfHumidityHeight = 15;
     const paddingTopOffset = 10;
     const paddingLeftOffset = 25;
     const d = 170;
 
     const result = {
-        x: - halfSunWidth + paddingLeftOffset,
-        y: d / 2 - halfSunHeight - paddingTopOffset,
+        x: - halfHumidityWidth + paddingLeftOffset,
+        y: d / 2 - halfHumidityHeight - paddingTopOffset,
     }
 
     const humidity = props.details.main?.humidity ?? 0;
-    const sunrise = 0;
-    const sunset = 100;
+    const minHumidity = 0;
+    const maxHumidity = 100;
 
-    if (humidity >= sunset) {
-        result.x = d - result.x + halfSunWidth * 2;
+    if (humidity >= maxHumidity) {
+        result.x = d - result.x + halfHumidityWidth * 2;
         return result;
     }
 
-    if (humidity <= sunrise) return result;
+    if (humidity <= minHumidity) return result;
 
-    const p = (humidity - sunrise) / (sunset - sunrise);
+    const p = (humidity - minHumidity) / (maxHumidity - minHumidity);
     const h = (1 - p) * d;
     const a = Math.acos(1 - (2 * h / d));
     const xord = d * Math.sin(a);
 
-    result.x = d - h - halfSunWidth + paddingLeftOffset;
-    result.y = d / 2 - xord / 2 - halfSunHeight + paddingTopOffset;
+    result.x = d - h - halfHumidityWidth + paddingLeftOffset;
+    result.y = d / 2 - xord / 2 - halfHumidityHeight + paddingTopOffset;
 
     return result;
 });
