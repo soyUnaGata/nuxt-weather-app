@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="legend">
+        <div class="legend text-base">
             <div class="sunrise">{{ getTime(details.sys?.sunrise, details.timezone) }}</div>
             <div class="sunset">{{ getTime(details.sys?.sunset, details.timezone) }}</div>
         </div>
@@ -139,11 +139,7 @@ onMounted(() => {
     width: 230px;
     top: 136px;
     padding: 0 20px;
-}
-
-.sunrise,
-.sunset {
-    font-size: 12px;
+    color: var(--primary);
 }
 </style> 
   
