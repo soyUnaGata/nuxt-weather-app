@@ -62,11 +62,6 @@ const humidityPosition = computed(() => {
     return result;
 });
 
-// onMounted(() => {
-//     // if (props.details) {
-//     //     humidity.value = props.details.main?.humidity;
-//     // }
-// });
 
 
 </script> 
