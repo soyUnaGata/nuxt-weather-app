@@ -10,7 +10,7 @@
         </div>
 
         <div class="legend text-base ">
-            <p class="wind__speed text-base">{{ winds.speed }} m/s</p>
+            <p class="wind__speed">{{ winds.speed }} m/s</p>
             <p class="wind__deg">{{ winds.deg }} deg</p>
         </div>
     </div>

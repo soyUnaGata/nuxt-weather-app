@@ -11,9 +11,10 @@
             </div>
         </div>
 
-        <div class="legend">
+        <div class="legend text-base">
             <div class="humidity__from">0</div>
-            <div v-if="props.details.main?.humidity !== 0" class="humidity__to">{{ props.details.main?.humidity }}</div>
+            <div v-if="props.details.main?.humidity !== 0" class="humidity__to underline">{{ props.details.main?.humidity }}
+            </div>
             <div class="humidity__to">100</div>
         </div>
     </div>
@@ -110,11 +111,7 @@ const humidityPosition = computed(() => {
     width: 230px;
     top: 136px;
     padding: 0 20px;
-}
-
-.humidity__from,
-.humidity__to {
-    font-size: 12px;
+    color: var(--primary);
 }
 
 .humidity__headline {
