@@ -10,7 +10,7 @@
         </div>
 
         <div class="legend text-base ">
-            <p class="wind__speed">{{ pressureToday }}</p>
+            <p class="wind__speed">{{ getPressureMm(pressureToday) }} mm</p>
             <p class="wind__deg">{{ }} deg</p>
         </div>
     </div>
@@ -18,6 +18,7 @@
   
 <script setup>
 import { defineProps } from 'vue';
+import { getPressureMm } from '../utils/index.js';
 
 const props = defineProps({
     pressureToday: {
