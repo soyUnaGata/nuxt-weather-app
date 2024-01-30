@@ -24,14 +24,6 @@ const props = defineProps({
         type: Object,
     }
 });
-
-
-
-onMounted(() => {
-
-});
-
-
 </script> 
   
 <style scoped>

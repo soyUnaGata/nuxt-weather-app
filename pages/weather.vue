@@ -18,7 +18,7 @@
         </nav>
 
         <main class="details__weather mt-16 flex w-full">
-            <div class="about__weather-section flex flex-col w-2/4">
+            <div class="about__weather-section flex flex-col w-full">
                 <div class="weather__conditions flex justify-between items-center">
                     <div class="weather__conditions-img">
                         <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
@@ -73,11 +73,12 @@
                 </section>
             </div>
 
-            <div class="details flex">
+            <div class="details flex w-full justify-center">
                 <section class="grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="details" />
                     <humidity :details="details" />
                     <wind :winds="winds" />
+                    <pressure :pressureToday="pressureNum" />
                 </section>
             </div>
         </main>
@@ -107,6 +108,7 @@ const isMetric = ref(true);
 const temperature = ref({});
 const timezone = ref('');
 const winds = ref({});
+const pressureNum = ref(0);
 
 
 async function getWeather() {
@@ -118,6 +120,7 @@ async function getWeather() {
             weather.value = info.weather.length ? info.weather[0] : {};
             timezone.value = info.timezone;
             winds.value = info.wind;
+            pressureNum.value = info.main.pressure;
         })
 }
 

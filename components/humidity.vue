@@ -21,7 +21,7 @@
 </template>
   
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { defineProps } from 'vue';
 
 const props = defineProps({
     details: {
@@ -62,8 +62,6 @@ const humidityPosition = computed(() => {
 
     return result;
 });
-
-
 
 </script> 
   
