@@ -86,12 +86,6 @@ const humidityPosition = computed(() => {
     position: relative;
 }
 
-.sun-animation {
-    height: 150px;
-    background-color: rgba(255, 255, 0, 0.4);
-    transition: width 2s linear;
-}
-
 
 .symbol {
     position: absolute;

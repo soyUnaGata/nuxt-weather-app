@@ -9,9 +9,8 @@
             </div>
         </div>
 
-        <div class="legend text-base ">
-            <p class="wind__speed">{{ getPressureMm(pressureToday) }} mm</p>
-            <p class="wind__deg">{{ }} deg</p>
+        <div class="legend text-base text-center">
+            <p class="pressure__num text-center">{{ getPressureMm(pressureToday) }} mm</p>
         </div>
     </div>
 </template>
@@ -39,46 +38,14 @@ const props = defineProps({
     position: absolute;
 }
 
-.humidity-path {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    position: relative;
-}
-
-.sun-animation {
-    height: 150px;
-    background-color: rgba(255, 255, 0, 0.4);
-    transition: width 2s linear;
-}
-
-
-.symbol {
-    position: absolute;
-    font-size: 24px;
-    top: 52px;
-    z-index: 2222;
-    left: 27px;
-    color: white;
-}
-
 .legend {
     position: relative;
-    display: flex;
-    justify-content: space-between;
     width: 230px;
     top: 136px;
     padding: 0 20px;
 }
 
-.humidity__from,
-.humidity__to {
-    font-size: 12px;
-}
-
-.wind__headline,
-.wind__speed,
-.wind__deg {
+.pressure__num {
     color: var(--primary);
 }
 </style> 
