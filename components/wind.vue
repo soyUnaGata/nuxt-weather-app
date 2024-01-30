@@ -1,17 +1,17 @@
 <template>
     <div class="weather__vidget-wrapper  bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl">
-        <h5 class="wind__headline text-center pt-3 font-normal">Humidity</h5>
-        <div class="humidity">
-            <div style="position:relative; padding-top: 10px; padding-left: 25px;">
-                <div class="humidity-path">
-                    <img src="/img/state-weather/wind.png" alt="">
+        <h5 class="wind__headline text-center pt-3 font-normal">Wind</h5>
+        <div class="wind__about flex justify-center">
+            <div style="position:relative; padding-top: 40px;">
+                <div class="wind-path">
+                    <img src="../assets/img/wind.png" class="size-20" alt="wind">
                 </div>
             </div>
         </div>
 
-        <div class="legend">
-            <p class="humidity__from">0</p>
-            <p class="humidity__from">0</p>
+        <div class="legend text-base ">
+            <p class="wind__speed text-base">{{ winds.speed }} m/s</p>
+            <p class="wind__deg">{{ winds.deg }} deg</p>
         </div>
     </div>
 </template>
@@ -20,49 +20,15 @@
 import { onMounted, defineProps } from 'vue';
 
 const props = defineProps({
-    details: {
+    winds: {
         type: Object,
     }
 });
 
-const humidityPosition = computed(() => {
-    const halfHumidityWidth = 6;
-    const halfHumidityHeight = 15;
-    const paddingTopOffset = 10;
-    const paddingLeftOffset = 25;
-    const d = 170;
 
-    const result = {
-        x: - halfHumidityWidth + paddingLeftOffset,
-        y: d / 2 - halfHumidityHeight - paddingTopOffset,
-    }
-
-    const humidity = props.details.main?.humidity ?? 0;
-    const minHumidity = 0;
-    const maxHumidity = 100;
-
-    if (humidity >= maxHumidity) {
-        result.x = d - result.x + halfHumidityWidth * 2;
-        return result;
-    }
-
-    if (humidity <= minHumidity) return result;
-
-    const p = (humidity - minHumidity) / (maxHumidity - minHumidity);
-    const h = (1 - p) * d;
-    const a = Math.acos(1 - (2 * h / d));
-    const xord = d * Math.sin(a);
-
-    result.x = d - h - halfHumidityWidth + paddingLeftOffset;
-    result.y = d / 2 - xord / 2 - halfHumidityHeight + paddingTopOffset;
-
-    return result;
-});
 
 onMounted(() => {
-    if (props.details) {
-        humidity.value = props.details.main?.humidity;
-    }
+
 });
 
 
@@ -74,11 +40,9 @@ onMounted(() => {
     width: 245px;
 }
 
-.humidity {
-    margin-top: 40px;
+.wind__about {
     width: 230px;
     height: 85px;
-    overflow: hidden;
     position: absolute;
 }
 
@@ -119,7 +83,9 @@ onMounted(() => {
     font-size: 12px;
 }
 
-.wind__headline {
+.wind__headline,
+.wind__speed,
+.wind__deg {
     color: var(--primary);
 }
 </style> 

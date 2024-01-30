@@ -77,6 +77,7 @@
                 <section class="grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="details" />
                     <humidity :details="details" />
+                    <wind :winds="winds" />
                 </section>
             </div>
         </main>
@@ -96,6 +97,7 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 
+
 const route = useRoute();
 const city = ref(route.query.city);
 
@@ -104,6 +106,7 @@ const weather = ref({});
 const isMetric = ref(true);
 const temperature = ref({});
 const timezone = ref('');
+const winds = ref({});
 
 
 async function getWeather() {
@@ -114,6 +117,7 @@ async function getWeather() {
             temperature.value = info.main ? info.main.temp : {};
             weather.value = info.weather.length ? info.weather[0] : {};
             timezone.value = info.timezone;
+            winds.value = info.wind;
         })
 }
 
