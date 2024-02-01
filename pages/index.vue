@@ -1,7 +1,5 @@
 <template>
     <div>
-        <input v-model="city" type="text" @keyup.enter="getCity" placeholder="Search for a city or state"
-            class="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]" />
         <NuxtLink :to="{ path: '/weather', query: { city: city } }">
             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
                 <path
@@ -10,8 +8,9 @@
         </NuxtLink>
 
         <div>
-            <input type="text" v-model="city" @input="getSearchResults" placeholder="Search for a city or state"
-                class="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]" />
+            <input type="text" v-model="city" @input="getSearchResults" @keyup.enter="getCity"
+                placeholder="Search for a city or state"
+                class="py-4 px-1  bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]" />
             <ul class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
                 v-if="geoSearchResults">
                 <p class="py-2" v-if="searchError">
@@ -50,8 +49,6 @@ const previewCity = (searchResult) => {
         query: {
             city: searchResult.name,
             country: searchResult.country,
-            lat: searchResult.lat,
-            lon: searchResult.lon,
             preview: true,
         },
     });
