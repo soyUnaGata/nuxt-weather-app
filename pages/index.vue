@@ -23,7 +23,7 @@
                 <template v-else>
                     <li v-for="searchResult in geoSearchResults" :key="searchResult.id" class="py-2 cursor-pointer"
                         @click="previewCity(searchResult)">
-                        {{ searchResult.name }}, {{ searchResult.country }}, {{ searchResult.state }}
+                        {{ searchResult.city }}, {{ searchResult.country }}, {{ searchResult.state }}
                     </li>
                 </template>
             </ul>
@@ -34,6 +34,7 @@
 <script setup>
 import axios from 'axios';
 import { API_KEY } from '../composables/index';
+import CityService from '@/server/city-service';
 
 const city = ref('');
 const router = useRouter();
@@ -43,12 +44,12 @@ const getCity = () => {
 }
 
 const previewCity = (searchResult) => {
-    const [name, country] = searchResult.name.split(",");
+    const [city, country] = searchResult.city.split(",");
     router.push({
         name: "weather",
-        params: { name: name.replaceAll(" ", ""), country: country },
+        params: { name: city.replace("peninsula", "").trim(), country: country },
         query: {
-            city: searchResult.name,
+            city: searchResult.city.replace("peninsula", "").trim(),
             country: searchResult.country,
             preview: true,
         },
@@ -64,18 +65,18 @@ const getSearchResults = () => {
     queryTimeout.value = setTimeout(async () => {
         if (city.value !== "") {
             try {
-                const result = await axios.get(
-                    `http://api.openweathermap.org/geo/1.0/direct?q=${city.value}&limit=10&appid=${API_KEY}`
-                );
-                geoSearchResults.value = result.data;
+                geoSearchResults.value = await CityService.getCityInfo(city.value);
             } catch {
                 searchError.value = true;
             }
-
             return;
         }
         geoSearchResults.value = null;
     }, 300);
 };
+
+onMounted(async () => {
+    getSearchResults();
+})
 </script>
 
