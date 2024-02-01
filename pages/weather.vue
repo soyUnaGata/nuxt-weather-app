@@ -143,6 +143,12 @@ onMounted(async () => {
     const a = await ForecastService.getForecast('Kyiv');
     console.log('a', a.details)
     console.log('INCREDEBLY', getDateTime(a.details[0].dt))
+    if (details.value == '') {
+        setTimeout(async () => {
+            console.log('This code was delayed by 1500 milliseconds after component mount');
+            await navigateTo('/', { redirectCode: 301 })
+        }, 60000)
+    }
 });
 
 
