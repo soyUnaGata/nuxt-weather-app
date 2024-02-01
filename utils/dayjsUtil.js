@@ -34,3 +34,10 @@ export const getTime = (t, timezone = 0) => {
     .add(timezone, "s")
     .format("h:mm a");
 };
+
+export const getDateTime = (t, timezone = 0) => {
+  return dayjs
+    .utc(new Date(t * 1000))
+    .add(timezone, "s")
+    .format("DD MMMM YY h:mm a");
+};

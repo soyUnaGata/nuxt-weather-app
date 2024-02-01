@@ -93,14 +93,18 @@
 <script setup>
 import { API_KEY, BASE_URL } from "../composables/index.js";
 import { capitalizeFirstLetter } from "../utils/index.js";
-import { formatTime, formatDay, formatMonth, formatYear, formatWeekday } from "../utils/dayjsUtil.js";
+import { formatTime, formatDay, formatMonth, formatYear, formatWeekday, getDateTime } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import ForecastService from '../server/weather-service.js'
 
 
 
 const route = useRoute();
 const city = ref(route.query.city);
+const country = ref(route.query.country);
+const lat = ref(route.query.lat);
+const lon = ref(route.query.lon);
 
 const details = ref('')
 const weather = ref({});
@@ -112,7 +116,8 @@ const pressureNum = ref(0);
 
 
 async function getWeather() {
-    await axios.get(`${BASE_URL}?q=${city.value}&appid=${API_KEY}&units=imperial`)
+    await axios.get(`${BASE_URL}?q=${city.value},${country.value}&appid=${API_KEY}&units=imperial`)
+        // (`${BASE_URL}?lat=${lat.value}&lon=${lon.value}&appid=${API_KEY}&units=imperial`)
         .then(response => response.data)
         .then((info) => {
             details.value = info;
@@ -133,8 +138,11 @@ const fahrenheitToCelsius = computed(() => {
 });
 
 
-onMounted(() => {
+onMounted(async () => {
     getWeather()
+    const a = await ForecastService.getForecast('Kyiv');
+    console.log('a', a.details)
+    console.log('INCREDEBLY', getDateTime(a.details[0].dt))
 });
 
 
