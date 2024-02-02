@@ -4,7 +4,7 @@
         <div class="humidity">
             <div style="position:relative; padding-top: 10px; padding-left: 25px;">
                 <div class="humidity-path">
-                    <img src="/img/state-weather/quality.png" alt="">
+                    <img src="/img/state-weather/humidity-2.svg" alt="">
                 </div>
                 <span class="symbol cursor-pointer"
                     :style="{ left: `${humidityPosition?.x}px`, top: `${humidityPosition?.y}px` }">&#8226</span>
@@ -29,9 +29,10 @@ const props = defineProps({
     }
 });
 
+
 const humidityPosition = computed(() => {
-    const halfHumidityWidth = 6;
-    const halfHumidityHeight = 15;
+    const halfHumidityWidth = 4;
+    const halfHumidityHeight = 4;
     const paddingTopOffset = 10;
     const paddingLeftOffset = 25;
     const d = 170;
