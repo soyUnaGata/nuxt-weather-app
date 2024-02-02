@@ -13,7 +13,6 @@ class ForecastService {
       .then((response) => response.data)
       .then((info) => {
         if (!info) return [];
-        console.log(info);
         const forecast = info;
         return {
           country: forecast.city.country,
@@ -24,7 +23,34 @@ class ForecastService {
           timezone: forecast.city.timezone,
           details: forecast.list,
         };
-      });
+      })
+      .catch((err) => null);
+  }
+
+  async getWeather(city, country) {
+    const url = `${WEATHER_URL}${city},${country}&appid=${API_KEY}&units=imperial`;
+    return await axios
+      .get(url)
+      .then((response) => response.data)
+      .then((info) => {
+        if (!info) return [];
+        const weather = info;
+        return {
+          id: weather.id,
+          humidity: weather.main.humidity,
+          pressure: weather.main.pressure,
+          temp: weather.main.temp,
+          city: weather.name,
+          county: weather.sys.country,
+          sunrize: weather.sys.sunrise,
+          sunset: weather.sys.sunset,
+          timezone: weather.timezone,
+          weather: weather.weather[0].description,
+          wind_deg: weather.wind.deg,
+          wind_speed: weather.wind.speed,
+        };
+      })
+      .catch((err) => null);
   }
 }
 
