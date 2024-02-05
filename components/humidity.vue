@@ -25,7 +25,7 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
     humidity: {
-        type: String,
+        type: Number,
     }
 });
 
