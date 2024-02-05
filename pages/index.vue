@@ -23,10 +23,15 @@
                 <template v-else>
                     <li v-for="searchResult in geoSearchResults" :key="searchResult.id" class="py-2 cursor-pointer"
                         @click="previewCity(searchResult)">
-                        {{ searchResult.city }}, {{ searchResult.country }}, {{ searchResult.state }}
+                        {{ searchResult.city }} , {{ searchResult.country }} <span v-if="searchResult.state">, {{
+                            searchResult.state }}</span>
                     </li>
                 </template>
             </ul>
+        </div>
+
+        <div class="func">
+
         </div>
     </div>
 </template>
@@ -35,6 +40,7 @@
 import axios from 'axios';
 import { API_KEY } from '../composables/index';
 import CityService from '@/server/city-service';
+
 
 const city = ref('');
 const router = useRouter();
