@@ -80,7 +80,7 @@
                     <sunrise :details="weather" />
                     <humidity :humidity="weather.humidity" />
                     <wind :winds="weather.winds" />
-                    <!-- <pressure :pressureToday="pressureNum" /> -->
+                    <pressure :pressureToday="weather.pressure" />
                 </section>
             </div>
         </main>
@@ -249,7 +249,7 @@ onMounted(async () => {
 }
 
 .weather__conditions-img__sized {
-    width: 140px;
+    width: 180px;
     height: 150px;
 }
 
