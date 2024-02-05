@@ -13,7 +13,7 @@
 
         <div class="legend text-base">
             <div class="humidity__from">0</div>
-            <div v-if="props.details.main?.humidity !== 0" class="humidity__to underline">{{ props.details.main?.humidity }}
+            <div v-if="props.humidity !== 0" class="humidity__to underline">{{ props.humidity }}
             </div>
             <div class="humidity__to">100</div>
         </div>
@@ -24,8 +24,8 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
-    details: {
-        type: Object,
+    humidity: {
+        type: String,
     }
 });
 
@@ -42,7 +42,7 @@ const humidityPosition = computed(() => {
         y: d / 2 - halfHumidityHeight - paddingTopOffset,
     }
 
-    const humidity = props.details.main?.humidity ?? 0;
+    const humidity = props.humidity ?? 0;
     const minHumidity = 0;
     const maxHumidity = 100;
 

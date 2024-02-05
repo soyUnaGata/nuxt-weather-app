@@ -78,9 +78,9 @@
             <div class="details flex w-full justify-center">
                 <section class="grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="weather" />
-                    <!-- <humidity :details="details" />
-                    <wind :winds="winds" />
-                    <pressure :pressureToday="pressureNum" /> -->
+                    <humidity :humidity="weather.humidity" />
+                    <!-- <wind :winds="winds" /> -->
+                    <!-- <pressure :pressureToday="pressureNum" /> -->
                 </section>
             </div>
         </main>
@@ -117,7 +117,7 @@ const fahrenheitToCelsius = computed(() => {
 });
 
 onMounted(async () => {
-    weather.value = await ForecastService.getWeather("Kyiv", 'UA');
+    weather.value = await ForecastService.getWeather(city.value, country.value);
     console.log(weather.value)
 
     if (!weather) {
