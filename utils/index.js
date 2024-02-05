@@ -9,3 +9,6 @@ export const capitalizeFirstLetter = (str) => {
 export const getPressureMm = (hpa) => {
   return Math.round(hpa * PRESSURE_UNIT);
 };
+
+export const sleep = (duration) =>
+  new Promise((res) => setTimeout(res, duration));
