@@ -25,6 +25,7 @@ import { getTime } from "../utils/dayjsUtil.js";
 const props = defineProps({
     details: {
         type: Object,
+        default: {}
     }
 });
 

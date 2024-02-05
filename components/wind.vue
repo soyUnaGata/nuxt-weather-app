@@ -17,7 +17,7 @@
 </template>
   
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { defineProps } from 'vue';
 
 const props = defineProps({
     winds: {
@@ -25,13 +25,6 @@ const props = defineProps({
         default: {}
     }
 });
-
-onMounted(() => {
-    if (props.winds) {
-        console.log(`Wind Speed: ${props.winds.speed} m/s`);
-        console.log(`Wind Degree: ${props.winds.deg} deg`);
-    }
-})
 </script> 
   
 <style scoped>
