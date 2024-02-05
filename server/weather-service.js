@@ -42,13 +42,15 @@ class ForecastService {
           pressure: weather.main.pressure,
           temp: weather.main.temp,
           city: weather.name,
-          county: weather.sys.country,
+          country: weather.sys.country,
           sunrise: weather.sys.sunrise,
           sunset: weather.sys.sunset,
           timezone: weather.timezone,
           weather: weather.weather[0].description,
-          wind_deg: weather.wind.deg,
-          wind_speed: weather.wind.speed,
+          winds: {
+            speed: weather.wind.speed,
+            deg: weather.wind.deg,
+          },
         };
       })
       .catch((err) => null);

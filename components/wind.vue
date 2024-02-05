@@ -10,20 +10,28 @@
         </div>
 
         <div class="legend text-base ">
-            <p class="wind__speed">{{ winds.speed }} m/s</p>
-            <p class="wind__deg">{{ winds.deg }} deg</p>
+            <p class="wind__speed">{{ props.winds.speed }} m/s</p>
+            <p class="wind__deg">{{ props.winds.deg }} deg</p>
         </div>
     </div>
 </template>
   
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
 
 const props = defineProps({
     winds: {
         type: Object,
+        default: {}
     }
 });
+
+onMounted(() => {
+    if (props.winds) {
+        console.log(`Wind Speed: ${props.winds.speed} m/s`);
+        console.log(`Wind Degree: ${props.winds.deg} deg`);
+    }
+})
 </script> 
   
 <style scoped>

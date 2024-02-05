@@ -79,7 +79,7 @@
                 <section class="grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="weather" />
                     <humidity :humidity="weather.humidity" />
-                    <!-- <wind :winds="winds" /> -->
+                    <wind :winds="weather.winds" />
                     <!-- <pressure :pressureToday="pressureNum" /> -->
                 </section>
             </div>
@@ -93,11 +93,9 @@
 </template>
 
 <script setup>
-import { API_KEY, BASE_URL } from "../composables/index.js";
 import { capitalizeFirstLetter } from "../utils/index.js";
 import { formatTime, formatDay, formatMonth, formatYear, formatWeekday, getDateTime } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
 import ForecastService from '../server/weather-service.js'
 
 const route = useRoute();
