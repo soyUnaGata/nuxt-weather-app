@@ -21,8 +21,8 @@
             <div class="about__weather-section flex flex-col w-full">
                 <div class="weather__conditions flex justify-between items-center">
                     <div class="weather__conditions-img">
-                        <img v-if="src !== '/img/state-weather/undefined.png'" class="weather__conditions-img__sized"
-                            :src="`/img/state-weather/${weather.description}.png`" :alt="`${weather.description}`">
+                        <img class="weather__conditions-img__sized" :src="`/img/state-weather/${weather.weather}.png`"
+                            :alt="`${weather.weather}`">
                         <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
                     </div>
                 </div>
@@ -51,7 +51,8 @@
 
                         <span class="pipeline border"></span>
 
-                        <h3 class="weather__details-description text-3xl">{{ capitalizeFirstLetter(weather.description) }}
+                        <h3 class="weather__details-description text-3xl">{{
+                            capitalizeFirstLetter(weather.weather) }}
                         </h3>
                     </div>
 
@@ -98,60 +99,36 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import ForecastService from '../server/weather-service.js'
 
-
-
 const route = useRoute();
 const city = ref(route.query.city);
 const country = ref(route.query.country);
 const lat = ref(route.query.lat);
 const lon = ref(route.query.lon);
-
-const details = ref('')
-const weather = ref({});
+const weather = ref('');
 const isMetric = ref(true);
-const temperature = ref({});
-const timezone = ref('');
-const winds = ref({});
-const pressureNum = ref(0);
-
-
-async function getWeather() {
-    await axios.get(`${BASE_URL}?q=${city.value},${country.value}&appid=${API_KEY}&units=imperial`)
-        // (`${BASE_URL}?lat=${lat.value}&lon=${lon.value}&appid=${API_KEY}&units=imperial`)
-        .then(response => response.data)
-        .then((info) => {
-            details.value = info;
-            temperature.value = info.main ? info.main.temp : {};
-            weather.value = info.weather.length ? info.weather[0] : {};
-            timezone.value = info.timezone;
-            winds.value = info.wind;
-            pressureNum.value = info.main.pressure;
-        })
-}
 
 function toggleTemperature() {
     isMetric.value = !isMetric.value;
 }
 
 const fahrenheitToCelsius = computed(() => {
-    return temperature.value ? Math.round(parseInt(temperature.value - 32) * (5 / 9)) : 0;
+    return weather.value.temp ? Math.round(parseInt(weather.value.temp - 32) * (5 / 9)) : 0;
 });
-
 
 onMounted(async () => {
-    getWeather()
-    const a = await ForecastService.getForecast('Kyiv');
-    console.log('a', a.details)
-    console.log('INCREDEBLY', getDateTime(a.details[0].dt))
-    if (details.value == '') {
-        setTimeout(async () => {
-            console.log('This code was delayed by 1500 milliseconds after component mount');
-            await navigateTo('/', { redirectCode: 301 })
-        }, 60000)
+    weather.value = await ForecastService.getWeather("Kyiv", 'UA');
+    console.log(weather.value)
+
+    if (!info) {
+        console.log('notify')
+        await sleep(1500);
+        await navigateTo('/', { redirectCode: 301 });
     }
+
+    const a = await ForecastService.getForecast('Nova Scotia');
+
+
 });
-
-
 
 </script>
 
