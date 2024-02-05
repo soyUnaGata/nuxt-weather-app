@@ -12,14 +12,14 @@
         </div>
 
         <div class="legend text-base">
-            <div class="sunrise">{{ getTime(details.sys?.sunrise, details.timezone) }}</div>
-            <div class="sunset">{{ getTime(details.sys?.sunset, details.timezone) }}</div>
+            <div class="sunrise">{{ getTime(details.sunrise, details.timezone) }}</div>
+            <div class="sunset">{{ getTime(details.sunset, details.timezone) }}</div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { onMounted } from 'vue';
 import { getTime } from "../utils/dayjsUtil.js";
 
 const props = defineProps({
@@ -42,8 +42,8 @@ const sunPosition = computed(() => {
     }
 
     const now = props.details.dt ?? 0;
-    const sunrise = props.details.sys?.sunrise ?? 0;
-    const sunset = props.details.sys?.sunset ?? 0;
+    const sunrise = props.details.sunrise ?? 0;
+    const sunset = props.details.sunset ?? 0;
 
     if (now >= sunset) {
         result.x = d - result.x + halfSunWidth * 2;
@@ -68,8 +68,8 @@ const sunPosition = computed(() => {
 onMounted(() => {
     if (props.details) {
         now.value = props.details.dt;
-        sunrise.value = props.details.sys?.sunrise;
-        sunset.value = props.details.sys?.sunset;
+        sunrise.value = props.details.sunrise;
+        sunset.value = props.details.sunset;
     }
 
 });

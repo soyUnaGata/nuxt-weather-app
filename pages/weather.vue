@@ -76,12 +76,12 @@
             </div>
 
             <div class="details flex w-full justify-center">
-                <!-- <section class="grid grid-cols-2 gap-y-5 gap-x-10">
-                    <sunrise :details="details" />
-                    <humidity :details="details" />
+                <section class="grid grid-cols-2 gap-y-5 gap-x-10">
+                    <sunrise :details="weather" />
+                    <!-- <humidity :details="details" />
                     <wind :winds="winds" />
-                    <pressure :pressureToday="pressureNum" />
-                </section> -->
+                    <pressure :pressureToday="pressureNum" /> -->
+                </section>
             </div>
         </main>
 
@@ -120,7 +120,7 @@ onMounted(async () => {
     weather.value = await ForecastService.getWeather("Kyiv", 'UA');
     console.log(weather.value)
 
-    if (!info) {
+    if (!weather) {
         console.log('notify')
         await sleep(1500);
         await navigateTo('/', { redirectCode: 301 });

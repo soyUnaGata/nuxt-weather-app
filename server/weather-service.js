@@ -37,12 +37,13 @@ class ForecastService {
         const weather = info;
         return {
           id: weather.id,
+          dt: weather.dt,
           humidity: weather.main.humidity,
           pressure: weather.main.pressure,
           temp: weather.main.temp,
           city: weather.name,
           county: weather.sys.country,
-          sunrize: weather.sys.sunrise,
+          sunrise: weather.sys.sunrise,
           sunset: weather.sys.sunset,
           timezone: weather.timezone,
           weather: weather.weather[0].description,
