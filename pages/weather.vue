@@ -249,7 +249,6 @@ onMounted(async () => {
 }
 
 .weather__conditions-img__sized {
-    width: 180px;
     height: 150px;
 }
 

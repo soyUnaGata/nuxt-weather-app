@@ -1,10 +1,30 @@
 <template>
-    <div class="wrapper">
-        <div>
-            <div class="search__area flex">
-                <input type="text" v-model="city" @input="getSearchResults" @keyup.enter="getCity"
-                    placeholder="Search for a city or state"
-                    class="py-4 px-1 border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]" />
+    <div class="wrapper flex h-screen justify-center">
+        <div class="flex justify-center flex-col w-full px-12">
+            <div class="search__area flex items-center  justify-center gap-4">
+                <div class="input__search relative w-full">
+                    <input type="text" v-model="city" @input="getSearchResults" @keyup.enter="getCity"
+                        placeholder="Search for a city or state"
+                        class="placeholder-text-white py-4 px-1 bg-transparent border-b w-full focus:bg-transparent placeholder:text-white focus:outline-none" />
+
+                    <ul class="bg-weather-secondary w-full absolute justify-center text-white shadow-md py-2 px-1 top-[66px]"
+                        v-if="geoSearchResults">
+                        <p class="py-2" v-if="searchError">
+                            Sorry, something went wrong, please try again.
+                        </p>
+                        <p class="py-2" v-if="!searchError && geoSearchResults.length === 0">
+                            No results match your query, try a different term.
+                        </p>
+                        <template v-else>
+                            <li v-for="searchResult in geoSearchResults" :key="searchResult.id" class="py-2 cursor-pointer"
+                                @click="previewCity(searchResult)">
+                                {{ searchResult.city }} , {{ searchResult.country }} <span v-if="searchResult.state">, {{
+                                    searchResult.state }}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+
                 <NuxtLink :to="{ path: '/weather', query: { city: city } }">
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
                         <path
@@ -12,22 +32,7 @@
                     </svg>
                 </NuxtLink>
             </div>
-            <ul class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
-                v-if="geoSearchResults">
-                <p class="py-2" v-if="searchError">
-                    Sorry, something went wrong, please try again.
-                </p>
-                <p class="py-2" v-if="!searchError && geoSearchResults.length === 0">
-                    No results match your query, try a different term.
-                </p>
-                <template v-else>
-                    <li v-for="searchResult in geoSearchResults" :key="searchResult.id" class="py-2 cursor-pointer"
-                        @click="previewCity(searchResult)">
-                        {{ searchResult.city }} , {{ searchResult.country }} <span v-if="searchResult.state">, {{
-                            searchResult.state }}</span>
-                    </li>
-                </template>
-            </ul>
+
         </div>
 
         <div class="func">
@@ -37,8 +42,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { API_KEY } from '../composables/index';
 import CityService from '@/server/city-service';
 
 
@@ -86,3 +89,22 @@ onMounted(async () => {
 })
 </script>
 
+
+<style>
+input[type="text"].placeholder-text-white::placeholder {
+    color: white;
+    font-size: 15px;
+    font-weight: 200;
+}
+
+input[type="text"].placeholder-text-white {
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+input[type="text"].placeholder-text-white:-webkit-autofil {
+    color: white;
+    -webkit-text-fill-color: white;
+}
+</style>
