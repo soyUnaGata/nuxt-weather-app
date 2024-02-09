@@ -7,7 +7,7 @@
                         placeholder="Search for a city or state"
                         class="placeholder-text-white py-4 px-1 bg-transparent border-b w-full focus:bg-transparent placeholder:text-white focus:outline-none" />
 
-                    <ul class="bg-weather-secondary w-full absolute justify-center text-white shadow-md py-2 px-1 top-[66px]"
+                    <ul class="input__search-ul w-full px-2.5 absolute justify-center text-white shadow-md py-2 top-[66px]"
                         v-if="geoSearchResults">
                         <p class="py-2" v-if="searchError">
                             Sorry, something went wrong, please try again.
@@ -106,5 +106,12 @@ input[type="text"].placeholder-text-white {
 input[type="text"].placeholder-text-white:-webkit-autofil {
     color: white;
     -webkit-text-fill-color: white;
+}
+
+.input__search-ul {
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.1px);
 }
 </style>
