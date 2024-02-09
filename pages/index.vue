@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper max-w-5xl flex h-screen justify-center">
+    <div class="wrapper flex h-screen justify-center">
         <div class="flex justify-center flex-col w-full px-12">
             <div class="search__area flex items-center  justify-center gap-4">
                 <div class="input__search relative w-full">
@@ -92,8 +92,9 @@ onMounted(async () => {
 </script>
 
 
-<style>
+<style scoped>
 .wrapper {
+    max-width: 1440px;
     margin: 0 auto;
 }
 

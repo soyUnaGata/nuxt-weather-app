@@ -116,7 +116,6 @@ const fahrenheitToCelsius = computed(() => {
 
 onMounted(async () => {
     weather.value = await ForecastService.getWeather(city.value, country.value);
-    console.log(weather.value)
 
     if (!weather) {
         console.log('notify')
