@@ -11,12 +11,19 @@ class CityService {
       .then((response) => response.data)
       .then((info) => {
         if (!info) return [];
-        return info.map((city) => ({
+        const cityInfo = info.map((city) => ({
           city: city.name,
           country: city.country,
           state: city.state,
         }));
-      });
+
+        const uniqueCityInfo = Array.from(
+          new Set(cityInfo.map(JSON.stringify))
+        ).map(JSON.parse);
+
+        return uniqueCityInfo;
+      })
+      .catch((err) => null);
   }
 }
 
