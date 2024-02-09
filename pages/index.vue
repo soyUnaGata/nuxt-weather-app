@@ -44,6 +44,7 @@
 </template>
 
 <script setup>
+import debounce from "lodash.debounce";
 import CityService from '@/server/city-service';
 
 
@@ -77,6 +78,7 @@ const getSearchResults = () => {
         if (city.value !== "") {
             try {
                 geoSearchResults.value = await CityService.getCityInfo(city.value);
+                console.log(geoSearchResults.value)
             } catch {
                 searchError.value = true;
             }
@@ -85,6 +87,8 @@ const getSearchResults = () => {
         geoSearchResults.value = null;
     }, 300);
 };
+
+
 
 onMounted(async () => {
     getSearchResults();
