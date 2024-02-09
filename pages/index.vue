@@ -3,7 +3,7 @@
         <div class="flex justify-center flex-col w-full px-12">
             <div class="search__area flex items-center  justify-center gap-4">
                 <div class="input__search relative w-full">
-                    <input type="text" v-model="city" @input="getSearchResults" @keyup.enter="getCity"
+                    <input type="text" v-model="city" @input="getCityResults" @keyup.enter="getCity"
                         placeholder="Search for a city or state"
                         class="placeholder-text-white py-4 px-1 bg-transparent border-b w-full focus:bg-transparent placeholder:text-white focus:outline-none" />
 
@@ -47,9 +47,11 @@
 import debounce from "lodash.debounce";
 import CityService from '@/server/city-service';
 
-
-const city = ref('');
 const router = useRouter();
+const city = ref('');
+const geoSearchResults = ref(null);
+const searchError = ref(null);
+
 
 const getCity = () => {
     router.push({ path: '/weather', query: { city: city.value } })
@@ -59,7 +61,7 @@ const previewCity = (searchResult) => {
     const [city, country] = searchResult.city.split(",");
     router.push({
         name: "weather",
-        params: { name: city.replace("peninsula", "").trim(), country: country },
+        params: { country: country },
         query: {
             city: searchResult.city.replace("peninsula", "").trim(),
             country: searchResult.country,
@@ -68,30 +70,19 @@ const previewCity = (searchResult) => {
     });
 };
 
-const queryTimeout = ref(null);
-const geoSearchResults = ref(null);
-const searchError = ref(null);
+const getCityResults = debounce(async function (e) {
+    if (!city.value) return;
+    try {
+        geoSearchResults.value = await CityService.getCityInfo(city.value);
+    } catch {
+        searchError.value = true;
+    }
 
-const getSearchResults = () => {
-    clearTimeout(queryTimeout.value);
-    queryTimeout.value = setTimeout(async () => {
-        if (city.value !== "") {
-            try {
-                geoSearchResults.value = await CityService.getCityInfo(city.value);
-                console.log(geoSearchResults.value)
-            } catch {
-                searchError.value = true;
-            }
-            return;
-        }
-        geoSearchResults.value = null;
-    }, 300);
-};
-
+}, 500)
 
 
 onMounted(async () => {
-    getSearchResults();
+    getCityResults();
 })
 </script>
 
