@@ -36,19 +36,21 @@
             </div>
         </div>
 
-        <div class="func"></div>
+        <redirect-alert ref="locationAlert"></redirect-alert>
     </div>
 </template>
 
 <script setup>
 import debounce from "lodash.debounce";
 import CityService from "@/server/city-service";
+import RedirectAlert from "~/components/redirectAlert.vue";
 
 const router = useRouter();
 const city = ref("");
 const geoSearchResults = ref(null);
 const searchError = ref(null);
 let isAskBefore = ref(false);
+const locationAlert = ref(null);
 
 const getCity = () => {
     router.push({ path: "/weather", query: { city: city.value } });
@@ -76,13 +78,13 @@ const getCityResults = debounce(async function (e) {
     }
 }, 500);
 
-const getPosition = () => {
-    if (!navigator.geolocation || isAskBefore) return;
-    // const isRedirect = await RedirectAlert.show();
+const getPosition = async () => {
+    if (!navigator.geolocation || !isAskBefore) return;
+
+    const isRedirect = await locationAlert.value.show();
     if (isRedirect) {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const { latitude, longitude } = position.coords;
-            // geoSearchResults.value = [await CityService.getCityInfoByCoord(latitude, longitude)]
             const result = await CityService.getCityInfoByCoord(latitude, longitude);
 
             city.value = result.city;
@@ -96,17 +98,6 @@ const getPosition = () => {
 onMounted(async () => {
     await getCityResults();
     getPosition();
-
-    // if (city.value !== '') {
-    //     // await navigateTo({
-    //     //     path: '/weather?city.value',
-
-    //     // })
-    //     console.log('onside')
-    //     return await navigateTo({ path: '/weather', query: { city: city.value } });
-    // }
-
-    console.log(city.value);
 });
 </script>
 
