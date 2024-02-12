@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper flex h-screen justify-center">
         <div class="flex justify-center flex-col w-full px-12">
-            <div class="search__area flex items-center  justify-center gap-4">
+            <div class="search__area flex items-center justify-center gap-4">
                 <div class="input__search relative w-full">
                     <input type="text" v-model="city" @input="getCityResults" @keyup.enter="getCity"
                         placeholder="Search for a city or state"
@@ -18,8 +18,8 @@
                         <template v-else>
                             <li v-for="searchResult in geoSearchResults" :key="searchResult.id" class="py-2 cursor-pointer"
                                 @click="previewCity(searchResult)">
-                                {{ searchResult.city }} , {{ searchResult.country }} <span v-if="searchResult.state">, {{
-                                    searchResult.state }}</span>
+                                {{ searchResult.city }} , {{ searchResult.country }}
+                                <span v-if="searchResult.state">, {{ searchResult.state }}</span>
                             </li>
                         </template>
                     </ul>
@@ -34,34 +34,31 @@
                     </div>
                 </NuxtLink>
             </div>
-
         </div>
 
-        <div class="func">
-
-        </div>
+        <div class="func"></div>
     </div>
 </template>
 
 <script setup>
 import debounce from "lodash.debounce";
-import CityService from '@/server/city-service';
+import CityService from "@/server/city-service";
 
 const router = useRouter();
-const city = ref('');
+const city = ref("");
 const geoSearchResults = ref(null);
 const searchError = ref(null);
-
+let isAskBefore = ref(false);
 
 const getCity = () => {
-    router.push({ path: '/weather', query: { city: city.value } })
-}
+    router.push({ path: "/weather", query: { city: city.value } });
+};
 
 const previewCity = (searchResult) => {
     const [city, country] = searchResult.city.split(",");
     router.push({
         name: "weather",
-        params: { country: country },
+        // params: { city: city, country: country },
         query: {
             city: searchResult.city.replace("peninsula", "").trim(),
             country: searchResult.country,
@@ -77,15 +74,41 @@ const getCityResults = debounce(async function (e) {
     } catch {
         searchError.value = true;
     }
+}, 500);
 
-}, 500)
+const getPosition = () => {
+    if (!navigator.geolocation || isAskBefore) return;
+    // const isRedirect = await RedirectAlert.show();
+    if (isRedirect) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            // geoSearchResults.value = [await CityService.getCityInfoByCoord(latitude, longitude)]
+            const result = await CityService.getCityInfoByCoord(latitude, longitude);
 
+            city.value = result.city;
+            console.log(city.value);
+            navigateTo({ path: '/weather', query: { city: result.city } });
+
+        });
+    }
+};
 
 onMounted(async () => {
-    getCityResults();
-})
-</script>
+    await getCityResults();
+    getPosition();
 
+    // if (city.value !== '') {
+    //     // await navigateTo({
+    //     //     path: '/weather?city.value',
+
+    //     // })
+    //     console.log('onside')
+    //     return await navigateTo({ path: '/weather', query: { city: city.value } });
+    // }
+
+    console.log(city.value);
+});
+</script>
 
 <style scoped>
 .wrapper {
