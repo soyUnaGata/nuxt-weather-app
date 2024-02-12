@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_KEY = "2e65091681075a7c367751f17ff53212";
 const CITY_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
+const COORD_URL = "https://api.openweathermap.org/data/2.5/weather?";
 
 class CityService {
   async getCityInfo(city) {
@@ -22,6 +23,22 @@ class CityService {
         ).map(JSON.parse);
 
         return uniqueCityInfo;
+      })
+      .catch((err) => null);
+  }
+
+  async getCityInfoByCoord(lat, lon) {
+    const url = `${COORD_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+    return await axios
+      .get(url)
+      .then((response) => response.data)
+      .then((info) => {
+        if (!info) return [];
+        const city = info;
+        return {
+          city: city.name,
+          country: city.sys.country,
+        };
       })
       .catch((err) => null);
   }
