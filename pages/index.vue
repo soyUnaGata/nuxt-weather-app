@@ -86,11 +86,7 @@ const getPosition = async () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const { latitude, longitude } = position.coords;
             const result = await CityService.getCityInfoByCoord(latitude, longitude);
-
-            city.value = result.city;
-            console.log(city.value);
             navigateTo({ path: '/weather', query: { city: result.city } });
-
         });
     }
 };
