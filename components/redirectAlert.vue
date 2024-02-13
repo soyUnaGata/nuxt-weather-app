@@ -3,7 +3,8 @@
         <div style="position: absolute; inset: 0px; background: rgba(15, 15, 15, 0.6);"></div>
         <div class="alert-dialog-content">
             <div style="overflow-wrap: break-word;">
-                <div style="text-align: center;">Do you agree?</div>
+                <div style="text-align: center;">Allow the exact location of the device to be used to display your weather
+                    forecast</div>
                 <div style="padding-top: 6px; padding-bottom: 6px;">
                     <button type="button" class="alert-dialog-action--confirm" @click="_confirm">Yes</button>
                     <button type="button" class="alert-dialog-action--cancel" @click="_cancel">No</button>
@@ -64,7 +65,7 @@ defineExpose({
     z-index: 1;
     box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 5px 10px, rgba(15, 15, 15, 0.2) 0px 15px 40px;
     border-radius: 6px;
-    background-color: brown;
+    background-color: var(--bg-toogle-orange);
     border: 1px solid brown;
     margin-bottom: 0px;
     overflow: hidden;
@@ -92,8 +93,8 @@ defineExpose({
     padding-right: 12px;
     font-size: 14px;
     line-height: 1.2;
-    color: red;
-    border: 1px solid red;
+    color: var(--primary);
+    border: 1px solid var(--bg-toogle-checked);
     width: 100%;
     margin-top: 8px;
     background: rgba(235, 87, 87, 0.1);
@@ -115,8 +116,8 @@ defineExpose({
     line-height: 1.2;
     width: 100%;
     margin-top: 8px;
-    color: blanchedalmond;
+    color: black;
     background-color: transparent;
-    border: 1px solid blue;
+    border: 1px solid black;
 }
 </style>
