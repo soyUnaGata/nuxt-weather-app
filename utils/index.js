@@ -12,3 +12,7 @@ export const getPressureMm = (hpa) => {
 
 export const sleep = (duration) =>
   new Promise((res) => setTimeout(res, duration));
+
+export const fahrenheitToCelsius = (temp) => {
+  return temp ? Math.round(parseInt(temp - 32) * (5 / 9)) : 0;
+};
