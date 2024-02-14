@@ -35,7 +35,8 @@
                 </div>
 
                 <div class="temperature__details mt-6 font-thin">
-                    <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius }}
+                    <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius(weather.temp)
+                    }}
                         <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
                     </p>
                     <p v-else class="temperature__details-fahr text-9xl flex"> {{ Math.round(weather.temp) }}
@@ -95,14 +96,14 @@
 
 
         <section class="forecast__for-days mt-16">
-            <forecast :forecasts="forecasts.details" />
+            <forecast :forecasts="forecasts.details" :isMetric="isMetric" />
         </section>
 
     </div>
 </template>
 
 <script setup>
-import { capitalizeFirstLetter } from "../utils/index.js";
+import { capitalizeFirstLetter, fahrenheitToCelsius } from "../utils/index.js";
 import { formatTime, formatDay, formatMonth, formatYear, formatWeekday, getDateTime } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from 'vue';
 import ForecastService from '../server/weather-service.js'
@@ -119,10 +120,6 @@ const forecasts = ref({});
 function toggleTemperature() {
     isMetric.value = !isMetric.value;
 }
-
-const fahrenheitToCelsius = computed(() => {
-    return weather.value.temp ? Math.round(parseInt(weather.value.temp - 32) * (5 / 9)) : 0;
-});
 
 onMounted(async () => {
     weather.value = await ForecastService.getWeather(city.value, country.value);

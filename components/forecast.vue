@@ -1,10 +1,10 @@
 <template>
     <div class="forecast-container bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl" v-for="forecast in forecasts">
         <div class="day-temperature mt-6 font-thin">
-            <p v-if="isMetric" class="temperature__details-cel flex">{{ }}
+            <p v-if="isMetric" class="temperature__details-cel flex">{{ fahrenheitToCelsius(forecast.main.temp) }}
                 <span class="temperature__details-cel__icon">&deg;C</span>
             </p>
-            <p v-else class="temperature__details-fahr flex"> {{ forecast.main.temp }}
+            <p v-else class="temperature__details-fahr flex"> {{ Math.round(forecast.main.temp) }}
                 <span class="temperature__details-fahr__icon">&deg;F</span>
             </p>
         </div>
@@ -21,11 +21,15 @@
 
 <script setup>
 import { getTime, getDateTime } from "../utils/dayjsUtil.js";
+import { fahrenheitToCelsius } from "../utils/index.js"
 
 const props = defineProps({
     forecasts: {
         type: Array,
         default: {}
+    },
+    isMetric: {
+        type: Boolean
     }
 });
 </script>
