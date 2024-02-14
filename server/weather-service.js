@@ -13,6 +13,7 @@ class ForecastService {
       .then((info) => {
         if (!info) return [];
         const forecast = info;
+        console.log(forecast);
         return {
           country: forecast.city.country,
           id: forecast.city.id,
