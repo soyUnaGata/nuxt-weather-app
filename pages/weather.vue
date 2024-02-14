@@ -95,7 +95,7 @@
 
 
         <section class="forecast__for-days mt-16">
-            <forecast />
+            <forecast :forecasts="forecasts.details" />
         </section>
 
     </div>
@@ -114,6 +114,7 @@ const lat = ref(route.query.lat);
 const lon = ref(route.query.lon);
 const weather = ref('');
 const isMetric = ref(true);
+const forecasts = ref({});
 
 function toggleTemperature() {
     isMetric.value = !isMetric.value;
@@ -132,7 +133,7 @@ onMounted(async () => {
         await navigateTo('/', { redirectCode: 301 });
     }
 
-    const a = await ForecastService.getForecast('Nova Scotia');
+    forecasts.value = await ForecastService.getForecast(city.value);
 
 
 });
