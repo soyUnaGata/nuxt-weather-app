@@ -29,21 +29,21 @@
                 <div class="weather__conditions flex justify-between items-center">
                     <div class="weather__conditions-img">
                         <img class="weather__conditions-img__sized" :src="`/img/state-weather/${weather.weather}.png`"
-                            :alt="`${weather.weather}`">
+                            :alt="`${weather.weather}`" />
                         <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
                     </div>
                 </div>
 
                 <div class="temperature__details mt-6 font-thin">
-                    <p v-if="isMetric" class="temperature__details-cel text-9xl flex">{{ fahrenheitToCelsius(weather.temp)
-                    }}
+                    <p v-if="isMetric" class="temperature__details-cel text-9xl flex">
+                        {{ fahrenheitToCelsius(weather.temp) }}
                         <span class="temperature__details-cel__icon text-4xl">&deg;C</span>
                     </p>
-                    <p v-else class="temperature__details-fahr text-9xl flex"> {{ Math.round(weather.temp) }}
+                    <p v-else class="temperature__details-fahr text-9xl flex">
+                        {{ Math.round(weather.temp) }}
                         <span class="temperature__details-fahr__icon text-4xl">&deg;F</span>
                     </p>
                 </div>
-
 
                 <section class="weather__details flex flex-col mt-4">
                     <div class="weather__details-about flex items-center gap-1.5">
@@ -53,14 +53,15 @@
                                 <path
                                     d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
                             </svg>
-                            <h3 class="weather__details-city__name text-3xl"> {{ weather.city }}, {{ weather.country }}
+                            <h3 class="weather__details-city__name text-3xl">
+                                {{ weather.city }}, {{ weather.country }}
                             </h3>
                         </div>
 
                         <span class="pipeline border"></span>
 
-                        <h3 class="weather__details-description text-3xl">{{
-                            capitalizeFirstLetter(weather.weather) }}
+                        <h3 class="weather__details-description text-3xl">
+                            {{ capitalizeFirstLetter(weather.weather) }}
                         </h3>
                     </div>
 
@@ -71,8 +72,10 @@
                                 <path
                                     d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" />
                             </svg>
-                            <span>{{ formatDay(weather.timezone) }}th {{ formatMonth(weather.timezone) }} '{{
-                                formatYear(weather.timezone) }}</span>
+                            <span>{{ formatDay(weather.timezone) }}th
+                                {{ formatMonth(weather.timezone) }} '{{
+                                    formatYear(weather.timezone)
+                                }}</span>
                         </div>
                         <div class="weather__details-date__weekday text-base flex items-center gap-1.5 mt-2">
                             {{ formatWeekday(weather.timezone) }}
@@ -93,29 +96,31 @@
             </div>
         </main>
 
-
-
         <section class="forecast__for-days mt-16 flex gap-5 overflow-hidden w-full">
-            <button>Prev</button>
-            <button>Next</button>
             <forecast :forecasts="forecasts.details" :isMetric="isMetric" />
         </section>
-
     </div>
 </template>
 
 <script setup>
 import { capitalizeFirstLetter, fahrenheitToCelsius } from "../utils/index.js";
-import { formatTime, formatDay, formatMonth, formatYear, formatWeekday, getDateTime } from "../utils/dayjsUtil.js";
-import { ref, onMounted, computed } from 'vue';
-import ForecastService from '../server/weather-service.js'
+import {
+    formatTime,
+    formatDay,
+    formatMonth,
+    formatYear,
+    formatWeekday,
+    getDateTime,
+} from "../utils/dayjsUtil.js";
+import { ref, onMounted, computed } from "vue";
+import ForecastService from "../server/weather-service.js";
 
 const route = useRoute();
 const city = ref(route.query.city);
 const country = ref(route.query.country);
 const lat = ref(route.query.lat);
 const lon = ref(route.query.lon);
-const weather = ref('');
+const weather = ref("");
 const isMetric = ref(true);
 const forecasts = ref({});
 
@@ -127,16 +132,13 @@ onMounted(async () => {
     weather.value = await ForecastService.getWeather(city.value, country.value);
 
     if (!weather) {
-        console.log('notify')
+        console.log("notify");
         await sleep(1500);
-        await navigateTo('/', { redirectCode: 301 });
+        await navigateTo("/", { redirectCode: 301 });
     }
 
     forecasts.value = await ForecastService.getForecast(city.value);
-
-
 });
-
 </script>
 
 <style scoped>
@@ -144,7 +146,6 @@ onMounted(async () => {
     max-width: 1440px;
     margin: 0 auto;
 }
-
 
 .knobs,
 .layer {
