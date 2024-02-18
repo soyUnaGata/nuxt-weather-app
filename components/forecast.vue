@@ -1,6 +1,7 @@
 <template>
-    <div class="forecast-container bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl" v-for="forecast in forecasts">
-        <div class="day-temperature mt-6 font-thin">
+    <div class="forecast-container font-semibold bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl items-center flex flex-col gap-5"
+        v-for="forecast in forecasts">
+        <div class="day-temperature mt-6 font-semibold">
             <p v-if="isMetric" class="temperature__details-cel flex">{{ fahrenheitToCelsius(forecast.main.temp) }}
                 <span class="temperature__details-cel__icon">&deg;C</span>
             </p>
@@ -38,6 +39,7 @@ const props = defineProps({
 .forecast-container {
     height: 210px;
     width: 150px;
+    color: var(--primary);
 }
 
 .day-weather-img__sized {
