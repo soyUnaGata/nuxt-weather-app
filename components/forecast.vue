@@ -22,6 +22,7 @@
                     :alt="`${forecast.weather[0].description}`">
             </div>
             <div class="day-date">
+                <p class="day-date__hours">{{ getDayDate(forecast.dt) }}</p>
                 <h3 class="day-date__number">{{ getDateTime(forecast.dt) }}</h3>
                 <p class="day-date__hours">{{ getTime(forecast.dt) }}</p>
             </div>
@@ -30,7 +31,7 @@
 </template>
 
 <script setup>
-import { getTime, getDateTime } from "../utils/dayjsUtil.js";
+import { getTime, getDateTime, getDayDate } from "../utils/dayjsUtil.js";
 import { fahrenheitToCelsius } from "../utils/index.js"
 
 const props = defineProps({
