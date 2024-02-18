@@ -95,7 +95,9 @@
 
 
 
-        <section class="forecast__for-days mt-16">
+        <section class="forecast__for-days mt-16 flex gap-5 overflow-hidden w-full">
+            <button>Prev</button>
+            <button>Next</button>
             <forecast :forecasts="forecasts.details" :isMetric="isMetric" />
         </section>
 
