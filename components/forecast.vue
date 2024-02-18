@@ -1,16 +1,10 @@
 <template>
-    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="8" :loop="true"
-        :space-between="30" :effect="'creative'" :autoplay="{
+    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="8" :space-between="30"
+        :effect="'fade'" :autoplay="{
             delay: 8000,
             disableOnInteraction: true,
-        }" :creative-effect="{
-    prev: {
-        shadow: false,
-        translate: ['-100%', 0, -1],
-    },
-    next: {
-        translate: ['100%', 0, 0],
-    },
+        }" :fade-effect="{
+    crossFade: true
 }">
         <SwiperSlide
             class="forecast-container font-semibold bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl items-center flex flex-col gap-5"
@@ -51,6 +45,10 @@ const props = defineProps({
 </script>
 
 <style scoped>
+.swiper-3d {
+    perspective: 1440px
+}
+
 .forecast-container {
     height: 210px;
     width: 150px;
