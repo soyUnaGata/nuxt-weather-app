@@ -110,7 +110,6 @@ import {
     formatMonth,
     formatYear,
     formatWeekday,
-    getDateTime,
 } from "../utils/dayjsUtil.js";
 import { ref, onMounted, computed } from "vue";
 import ForecastService from "../server/weather-service.js";
@@ -133,7 +132,7 @@ onMounted(async () => {
 
     if (!weather) {
         console.log("notify");
-        await sleep(1500);
+        await sleep(600);
         await navigateTo("/", { redirectCode: 301 });
     }
 
