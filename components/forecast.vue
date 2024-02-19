@@ -7,9 +7,9 @@
     crossFade: true
 }">
         <SwiperSlide
-            class="forecast-container font-semibold bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl items-center flex flex-col gap-5"
+            class="forecast-container font-semibold bg-gray-200/50 rounded-2xl pl-2.5 shadow-xl items-center flex flex-col gap-5 cursor-pointer"
             v-for="(forecast, index) in forecasts" :key="index">
-            <div class="day-temperature mt-6 font-semibold">
+            <div class="day-temperature font-semibold">
                 <p v-if="isMetric" class="temperature__details-cel flex">{{ fahrenheitToCelsius(forecast.main.temp) }}
                     <span class="temperature__details-cel__icon">&deg;C</span>
                 </p>
@@ -23,8 +23,8 @@
             </div>
             <div class="day-date">
                 <p class="day-date__hours">{{ getDayDate(forecast.dt) }}</p>
-                <h3 class="day-date__number">{{ getDateTime(forecast.dt) }}</h3>
-                <p class="day-date__hours">{{ getTime(forecast.dt) }}</p>
+                <h3 class="day-date__number text-center">{{ getDateTime(forecast.dt) }}</h3>
+                <p class="day-date__hours text-center">{{ getTime(forecast.dt) }}</p>
             </div>
         </SwiperSlide>
     </Swiper>
@@ -48,6 +48,12 @@ const props = defineProps({
 <style scoped>
 .swiper-3d {
     perspective: 1440px
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .forecast-container {
