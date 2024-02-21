@@ -12,4 +12,21 @@ export default defineNuxtConfig({
   api: {
     baseURL: "",
   },
+  content: {
+    permalink: ":slug",
+    page: "/_content",
+    generate: [
+      // for static build
+      "get",
+      "getAll",
+    ],
+    isPost: false,
+  },
+
+  api: {
+    baseURL:
+      process.env.NODE_ENV === "production"
+        ? "https://best-weather-forecasts.netlify.app/"
+        : "http://myipvps:3000",
+  },
 });
