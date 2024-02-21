@@ -3,8 +3,7 @@
         <div class="flex justify-center flex-col w-full px-12">
             <div class="search__area flex items-center justify-center gap-4">
                 <div class="input__search relative w-full">
-                    <input type="text" v-model="city" @input="getCityResults" @keyup.enter="getCity"
-                        placeholder="Search for a city or state"
+                    <input type="text" v-model="city" @input="getCityResults" placeholder="Search for a city or state"
                         class="placeholder-text-white py-4 px-1 bg-transparent border-b w-full focus:bg-transparent placeholder:text-white focus:outline-none" />
 
                     <ul class="input__search-ul w-full px-2.5 absolute justify-center text-white shadow-md py-2 top-[66px]"
@@ -52,10 +51,6 @@ const geoSearchResults = ref(null);
 const searchError = ref(null);
 let isAskBefore = ref(false);
 const locationAlert = ref(null);
-
-const getCity = () => {
-    router.push({ path: "/weather", query: { city: city.value } });
-};
 
 const previewCity = (searchResult) => {
     const [city, country] = searchResult.city.split(",");
