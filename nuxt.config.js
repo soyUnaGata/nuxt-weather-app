@@ -23,8 +23,8 @@ export default defineNuxtConfig({
   api: {
     baseURL:
       process.env.NODE_ENV === "production"
-        ? "http://myipvps:3000"
-        : "http://myipvps:3000",
+        ? "http://localhost:3000"
+        : "https://nuxtent.now.sh",
   },
 
   env: {
