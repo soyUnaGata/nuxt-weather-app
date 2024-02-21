@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = "2e65091681075a7c367751f17ff53212";
-const CITY_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
+const CITY_URL = "https://api.openweathermap.org/geo/1.0/direct?q=";
 const COORD_URL = "https://api.openweathermap.org/data/2.5/weather?";
 
 class CityService {
