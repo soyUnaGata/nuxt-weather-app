@@ -28,6 +28,6 @@ export default defineNuxtConfig({
   },
 
   env: {
-    SERVER_PRESET: process.env.SERVER_PRESET || "netlify_builder",
+    SERVER_PRESET: process.env.SERVER_PRESET || "netlify_edge",
   },
 });
