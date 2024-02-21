@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   api: {
     baseURL:
       process.env.NODE_ENV === "production"
-        ? "http://myipsvps:3000"
+        ? (SERVER_PRESET = netlify_edge)
         : "http://myipvps:3000",
   },
 });
