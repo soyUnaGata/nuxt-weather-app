@@ -9,9 +9,6 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  api: {
-    baseURL: "",
-  },
   content: {
     permalink: ":slug",
     page: "/_content",
@@ -26,7 +23,7 @@ export default defineNuxtConfig({
   api: {
     baseURL:
       process.env.NODE_ENV === "production"
-        ? "https://best-weather-forecasts.netlify.app/"
+        ? "http://myipsvps:3000"
         : "http://myipvps:3000",
   },
 });
