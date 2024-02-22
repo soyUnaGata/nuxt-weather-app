@@ -322,7 +322,7 @@ const isTablet = computed(() => {
 
 @media (max-width: 576px) {
     .wrapper {
-        max-width: 550px;
+        max-width: 540px;
         margin: 0 auto;
         padding: 15px 10px;
     }
@@ -334,6 +334,10 @@ const isTablet = computed(() => {
         gap: 50px;
     }
 
+    .weather__details-about {
+        flex-direction: column;
+    }
+
     .about__weather-section {
         align-items: center;
         justify-content: center;
@@ -341,6 +345,16 @@ const isTablet = computed(() => {
 
     .details__vidgets {
         grid-template-columns: 1fr;
+    }
+
+    .forecast__header {
+        display: flex;
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .forecast__for-days {
+        flex-direction: column;
     }
 }
 </style>
