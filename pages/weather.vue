@@ -57,7 +57,7 @@
                             </h3>
                         </div>
 
-                        <span class="pipeline border"></span>
+                        <span v-if="isDesktop || isTablet" class="pipeline border"></span>
 
                         <h3 class="weather__details-description text-3xl">
                             {{ capitalizeFirstLetter(weather.weather) }}
@@ -96,7 +96,7 @@
         </main>
 
         <section class="forecast__for-days mt-16 flex gap-5 overflow-hidden w-full">
-            <h3 class="forecast__header flex-none">Forecast for week</h3>
+            <h3 v-if="!isDesktop && !isTablet" class="forecast__header flex-none">Forecast for week</h3>
             <forecast class="forecast__wrapper" :forecasts="forecasts?.details" :isMetric="isMetric" />
         </section>
     </div>
@@ -137,8 +137,16 @@ onMounted(async () => {
     }
 
     forecasts.value = await ForecastService.getForecast(city.value);
-    console.log(weather.value)
 });
+
+const viewport = useViewport();
+let isDesktop = computed(() => {
+    return viewport.isGreaterOrEquals('desktop')
+})
+
+const isTablet = computed(() => {
+    return viewport.match('tablet')
+})
 </script>
 
 <style scoped>
@@ -301,20 +309,11 @@ onMounted(async () => {
         font-size: 24px;
     }
 
-    .pipeline {
-        display: none;
-    }
-
     .forecast__header {
         display: flex;
     }
 
     .forecast__for-days {
-        flex-direction: column;
-    }
-
-    .forecast__wrapper {
-        display: flex;
         flex-direction: column;
     }
 }

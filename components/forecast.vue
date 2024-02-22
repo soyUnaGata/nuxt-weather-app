@@ -1,6 +1,7 @@
 <template>
-    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="isDesktop ? 8 : 1"
-        :space-between="isDesktop ? 30 : 10" :effect="'fade'" :autoplay="{
+    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]"
+        :slides-per-view="isDesktop || isTablet ? 8 : 1" :space-between="isDesktop || isTablet ? 30 : 10" :effect="'fade'"
+        :autoplay="{
             delay: 8000,
             disableOnInteraction: true,
         }" :fade-effect="{
@@ -48,6 +49,9 @@ const props = defineProps({
 const viewport = useViewport();
 let isDesktop = computed(() => {
     return viewport.isGreaterOrEquals('desktop')
+});
+const isTablet = computed(() => {
+    return viewport.match('tablet')
 })
 </script>
 
