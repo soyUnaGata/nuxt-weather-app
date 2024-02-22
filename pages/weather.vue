@@ -322,8 +322,7 @@ const isTablet = computed(() => {
 
 @media (max-width: 576px) {
     .wrapper {
-        max-width: 540px;
-        margin: 0 auto;
+        max-width: 100%;
         padding: 15px 10px;
     }
 
@@ -338,6 +337,7 @@ const isTablet = computed(() => {
         flex-direction: column;
     }
 
+
     .about__weather-section {
         align-items: center;
         justify-content: center;
@@ -345,6 +345,44 @@ const isTablet = computed(() => {
 
     .details__vidgets {
         grid-template-columns: 1fr;
+    }
+
+    .forecast__header {
+        display: flex;
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .forecast__for-days {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .wrapper {
+        max-width: 540px;
+        padding: 15px 10px;
+    }
+
+    .details__weather {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+    }
+
+    .about__weather-section {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .weather__details-city__name,
+    .weather__details-description {
+        font-size: 26px;
+    }
+
+    .details__vidgets {
+        grid-template-columns: 1fr 1fr;
     }
 
     .forecast__header {
