@@ -57,7 +57,7 @@
                             </h3>
                         </div>
 
-                        <span v-if="isDesktop || isTablet" class="pipeline border"></span>
+                        <span v-if="isDesktop" class="pipeline border"></span>
 
                         <h3 class="weather__details-description text-3xl">
                             {{ capitalizeFirstLetter(weather.weather) }}
@@ -393,6 +393,47 @@ const isTablet = computed(() => {
 
     .forecast__for-days {
         flex-direction: column;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .wrapper {
+        max-width: 720px;
+        padding: 15px 20px;
+    }
+
+    .weather__details-about {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .details__vidgets {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .wrapper {
+        max-width: 960px;
+        padding: 15px 0px;
+    }
+
+    .weather__details-about {
+        gap: 0;
+    }
+
+    .weather__details-city__name,
+    .weather__details-description {
+        font-size: 24px;
+        text-wrap: wrap;
+    }
+}
+
+@media (min-width: 1280px) {
+    .wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 0px;
     }
 }
 </style>

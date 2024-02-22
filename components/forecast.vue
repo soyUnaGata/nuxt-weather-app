@@ -1,6 +1,6 @@
 <template>
     <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]"
-        :slides-per-view="isDesktop ? 8 : isTablet ? 4 : 2" :space-between="isDesktop ? 30 : isTablet ? 15 : 10"
+        :slides-per-view="isDesktop ? 8 : isTablet ? 4 : 2" :space-between="isDesktop ? 25 : isTablet ? 15 : 10"
         :effect="'fade'" :autoplay="{
             delay: 8000,
             disableOnInteraction: true,
