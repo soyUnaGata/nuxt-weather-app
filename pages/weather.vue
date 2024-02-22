@@ -97,7 +97,7 @@
 
         <section class="forecast__for-days mt-16 flex gap-5 overflow-hidden w-full">
             <h3 class="forecast__header flex-none">Forecast for week</h3>
-            <forecast :forecasts="forecasts?.details" :isMetric="isMetric" />
+            <forecast class="forecast__wrapper" :forecasts="forecasts?.details" :isMetric="isMetric" />
         </section>
     </div>
 </template>
@@ -310,6 +310,11 @@ onMounted(async () => {
     }
 
     .forecast__for-days {
+        flex-direction: column;
+    }
+
+    .forecast__wrapper {
+        display: flex;
         flex-direction: column;
     }
 }
