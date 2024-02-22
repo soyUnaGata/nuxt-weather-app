@@ -311,6 +311,8 @@ const isTablet = computed(() => {
 
     .forecast__header {
         display: flex;
+        color: var(--primary);
+        font-weight: 600;
     }
 
     .forecast__for-days {
