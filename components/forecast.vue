@@ -1,6 +1,6 @@
 <template>
-    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="8" :space-between="30"
-        :effect="'fade'" :autoplay="{
+    <Swiper class="w-full" :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="isMobile ? 1 : 8"
+        :space-between="isMobile ? 10 : 30" :effect="'fade'" :autoplay="{
             delay: 8000,
             disableOnInteraction: true,
         }" :fade-effect="{
@@ -32,7 +32,8 @@
 
 <script setup>
 import { getTime, getDateTime, getDayDate } from "../utils/dayjsUtil.js";
-import { fahrenheitToCelsius } from "../utils/index.js"
+import { fahrenheitToCelsius } from "../utils/index.js";
+import { useBreakpoint } from "nuxt-use";
 
 const props = defineProps({
     forecasts: {
@@ -43,6 +44,8 @@ const props = defineProps({
         type: Boolean
     }
 });
+
+const { isMobile } = useBreakpoint();
 </script>
 
 <style scoped>
