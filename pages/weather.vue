@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <nav>
-            <ul class="flex justify-between">
+            <ul class="flex justify-between items-center">
                 <NuxtLink to="/" class="flex items-center gap-3">
                     <li>
                         <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="20"
@@ -30,7 +30,6 @@
                     <div class="weather__conditions-img">
                         <img class="weather__conditions-img__sized" :src="`/img/state-weather/${weather.weather}.png`"
                             :alt="`${weather.weather}`" />
-                        <!-- <img :src="`https://openweathermap.org/img/wn/${weather.icon}@2x.png`" alt=""> -->
                     </div>
                 </div>
 
@@ -87,7 +86,7 @@
             </div>
 
             <div class="details flex w-full justify-center">
-                <section class="grid grid-cols-2 gap-y-5 gap-x-10">
+                <section class=" details__vidgets grid grid-cols-2 gap-y-5 gap-x-10">
                     <sunrise :details="weather" />
                     <humidity :humidity="weather.humidity" />
                     <wind :winds="weather.winds" />
@@ -97,7 +96,8 @@
         </main>
 
         <section class="forecast__for-days mt-16 flex gap-5 overflow-hidden w-full">
-            <forecast :forecasts="forecasts.details" :isMetric="isMetric" />
+            <h3 class="forecast__header flex-none">Forecast for week</h3>
+            <forecast :forecasts="forecasts?.details" :isMetric="isMetric" />
         </section>
     </div>
 </template>
@@ -130,13 +130,14 @@ function toggleTemperature() {
 onMounted(async () => {
     weather.value = await ForecastService.getWeather(city.value, country.value);
 
-    if (!weather) {
-        console.log("notify");
-        await sleep(600);
+    if (!weather.value) {
+        // console.log("notify");
+        // await sleep(600);
         await navigateTo("/", { redirectCode: 301 });
     }
 
     forecasts.value = await ForecastService.getForecast(city.value);
+    console.log(weather.value)
 });
 </script>
 
@@ -279,5 +280,61 @@ onMounted(async () => {
 .pipeline {
     width: 24px;
     transform: rotate(90deg);
+}
+</style>
+
+
+<style scoped>
+@media (min-width: 280px) and (max-width: 375px) {
+    .wrapper {
+        min-width: 280px;
+        margin: 0 auto;
+        padding: 15px 10px;
+    }
+
+    .weather__details-about {
+        flex-direction: column;
+    }
+
+    .weather__details-city__name,
+    .weather__details-description {
+        font-size: 24px;
+    }
+
+    .pipeline {
+        display: none;
+    }
+
+    .forecast__header {
+        display: flex;
+    }
+
+    .forecast__for-days {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .wrapper {
+        max-width: 550px;
+        margin: 0 auto;
+        padding: 15px 10px;
+    }
+
+    .details__weather {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+    }
+
+    .about__weather-section {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .details__vidgets {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

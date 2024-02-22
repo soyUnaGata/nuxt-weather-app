@@ -132,3 +132,13 @@ input[type="text"].placeholder-text-white:-webkit-autofil {
     backdrop-filter: blur(6.1px);
 }
 </style>
+
+
+<style>
+@media (max-width: 576px) {
+    .wrapper {
+        max-width: 570px;
+        margin: 0 auto;
+    }
+}
+</style>
