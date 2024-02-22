@@ -92,7 +92,6 @@ const getPosition = async () => {
 };
 
 const isSearchResultsEmpty = computed(() => {
-    console.log(geoSearchResults.value)
     return !searchError.value && geoSearchResults.value;
 })
 

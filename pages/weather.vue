@@ -131,8 +131,6 @@ onMounted(async () => {
     weather.value = await ForecastService.getWeather(city.value, country.value);
 
     if (!weather.value) {
-        // console.log("notify");
-        // await sleep(600);
         await navigateTo("/", { redirectCode: 301 });
     }
 
